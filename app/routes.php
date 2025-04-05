@@ -12,6 +12,6 @@ $app->group('/v1', function () use ($app) {
     // Home
     $app->get('/', function ($request, $response) { return 'HOME V1';});
 
-    // List All
+    // List 
     $app->get('/users/{page}/{perPage}', 'App\Controllers\UsersController:listing');
 });
