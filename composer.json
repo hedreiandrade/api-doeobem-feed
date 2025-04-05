@@ -1,0 +1,20 @@
+{
+    "require": {
+        "slim/slim": "^3.0",
+        "illuminate/database": "^5.2",
+        "illuminate/validation": "^5.1",
+        "davidepastore/slim-validation": "^0.5.0",
+        "firebase/php-jwt": "^5.0",
+        "illuminate/pagination": "~5.0"
+    },
+    "autoload":{
+    	"psr-4": {
+    		 "App\\": "app"
+    	}
+    },
+    "config": {
+        "allow-plugins": {
+            "kylekatarnls/update-helper": true
+        }
+    }
+}

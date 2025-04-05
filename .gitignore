@@ -1,0 +1,15 @@
+app/config/config.php
+sublimetext_xdebug.sublime-workspace
+*.sublime-project
+vendor/
+*.DS_Store
+.AppleDouble
+.LSOverride
+composer.lock
+TODOS.txt
+/.docker
+app/Config/db.php
+app/Config/jwt.php
+.idea/api-doeobem.iml
+.idea/modules.xml
+public/images/

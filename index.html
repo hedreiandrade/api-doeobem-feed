@@ -1,0 +1,52 @@
+<html>
+<head>
+<title>Coming soon! ;)</title>
+<style>
+body { 
+    background-color: blue; 
+    -ms-transition: background-color 3s ease-in-out;
+    -moz-transition: background-color 3s ease-in-out;
+    -webkit-transition: background-color 3s ease-in-out;
+    transition: background-color 3s ease-in-out;
+}
+
+.display{
+    color: white;
+    font-weight: bold;
+    max-width: 720px;
+    margin: 0 auto;
+    min-width: 700px;
+    height: 120px;
+    position: relative;
+    top: calc(50% - 100px);
+}
+</style>
+</head>
+<body>
+<div class="display">
+<pre>
+
+                            _              __ _                                           
+   __      ___    _ __     (_)    _ _     / _` |    o O O   ___     ___     ___    _ _    
+  / _|    / _ \  | '  \    | |   | ' \    \__, |   o       (_-<    / _ \   / _ \  | ' \   
+  \__|_   \___/  |_|_|_|  _|_|_  |_||_|   |___/   TS__[O]  /__/_   \___/   \___/  |_||_|  
+_|"""""|_|"""""|_|"""""|_|"""""|_|"""""|_|"""""| {======|_|"""""|_|"""""|_|"""""|_|"""""| 
+"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-'./o--000'"`-0-0-'"`-0-0-'"`-0-0-'"`-0-0-' 
+
+</pre>
+</div>
+<script>
+var c = ['#090922', '#39b141', '#4b4be9', '#d5d5d5', '#c7d01b', '#053843', '#710e70'];
+var cSize = c.length;
+var i = 0;
+
+window.setInterval(
+    function() {
+        document.body.style.backgroundColor = c[i];
+        if (++i >= cSize) i = 0;
+    },
+    3100
+);
+</script>
+</body>
+</html>
