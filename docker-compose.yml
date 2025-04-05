@@ -17,19 +17,3 @@ services:
       PHP_UPLOAD_MAX_FILESIZE: 100M
       PHP_POST_MAX_SIZE: 100M
       PHP_MEMORY_LIMIT: 300M
-    depends_on:
-      - mysqlslim
-
-  mysqlslim:
-    container_name: mysqlslim-feed
-    image: mysql:5.7.22
-    restart: unless-stopped
-    environment:
-      MYSQL_DATABASE: api-doeobem
-      MYSQL_ROOT_PASSWORD: 123
-      MYSQL_PASSWORD: 123
-      MYSQL_USER: root
-    volumes:
-      - ./.docker/mysql/dbdata:/var/lib/mysql
-    ports:
-      - 3315:3306
