@@ -10,8 +10,6 @@ require __DIR__ . '/../vendor/autoload.php';
 // JWT(secret) e as APIs de login do Google|Facebook
 require __DIR__ . '/../app/Config/db.php';
 require __DIR__ . '/../app/Config/jwt.php';
-require __DIR__ . '/../app/Config/google.php';
-require __DIR__ . '/../app/Config/facebook.php';
 
 # === Para mostrar todos erros
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
