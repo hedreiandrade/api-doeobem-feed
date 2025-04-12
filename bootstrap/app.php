@@ -45,6 +45,11 @@ $container['UsersController'] = function ($app) {
     return new App\Controllers\UsersController($app);
 };
 
+// Registra o middleware no container
+$container['Authenticate'] = function ($container) {
+    return new App\Middlewares\Authenticate();
+};
+
 //header("Access-Control-Allow-Origin: http://localhost");
 //header("Access-Control-Allow-Origin: http://localhost:3000");
 header("Access-Control-Allow-Origin: *");

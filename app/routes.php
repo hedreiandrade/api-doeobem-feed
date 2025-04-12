@@ -3,6 +3,7 @@
  * @author Hedrei Andrade <hedreiandrade@gmail.com>
  * @Version 1.0.0
  */
+
 $app->get('/', function ($request, $response) {
     return 'HOME';
 });
@@ -14,4 +15,4 @@ $app->group('/v1', function () use ($app) {
 
     // List 
     $app->get('/users/{page}/{perPage}', 'App\Controllers\UsersController:listing');
-});
+})->add($app->getContainer()->get('Authenticate'));

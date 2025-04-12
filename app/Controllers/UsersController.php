@@ -6,22 +6,19 @@
 namespace App\Controllers;
 
 use App\Models\Users;
-use Respect\Validation\Validator as v;
-use Firebase\JWT\JWT;
 
-class UsersController extends AbstractController
+class UsersController
 {
 
-    /**
-     * Construtor
-     *
-     * @param   Slim\Container    $Container    Container da aplicação
-     *
-     * @return  null
-     */
-    public function __construct($container)
-    {
-        parent::__construct($container);
-        $this->activeModel = new Users();
-    }
+    /* Lista de registros específicos (Com deleted_at null)
+    *
+    * @param   Request     $request    Objeto de requisição
+    * @param   Response    $response   Objeto de resposta
+    *
+    * @return  Json
+    */
+   public function listing($request, $response)
+   {
+       die('aaaa');
+   }
 }
