@@ -7,6 +7,7 @@ namespace App\Controllers;
 
 use Datetime;
 use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 use App\Models\Users;
 
 abstract class AbstractController
@@ -107,7 +108,7 @@ abstract class AbstractController
                 Retorno apenas o de ExpiredException
             */
 
-            JWT::decode($token, JWT_SECRET, array('HS256'));
+            JWT::decode($token, new Key(JWT_SECRET, 'HS256'));
             // Verifica senão foi realizado logout
             // Pode travar aplicação caso hacker delete essa sessão token
             // Resolver com variavel privada, true false para login || session token !
@@ -137,7 +138,7 @@ abstract class AbstractController
         JWT::$leeway = LEE_WAY;
         try {
             $payLoad = $this->payLoad();
-            $return['token'] = JWT::encode($payLoad, JWT_SECRET);
+            $return['token'] = JWT::encode($payLoad, JWT_SECRET, 'HS256');
             $return['expire'] = $payLoad['exp'];
             session_start();
             // Talvez seja errado fornecer token 
@@ -211,7 +212,7 @@ abstract class AbstractController
         // Validações pre-definidas no controller
         $this->getAttributeErrors($request);
         // Verifica se e-mail já não está registrado
-        $this->CheckEmailRegistered($params['email']);
+        $this->checkEmailRegistered($params['email']);
         // Esconde senhas
         if(isset($params['password'])){
             $params['password'] = $this->hidePassword($params['password']);     
@@ -247,10 +248,6 @@ abstract class AbstractController
     {
         $return = [];
         $params = $request->getParams();
-        // Verifica se e-mail já não está registrado
-        if(isset($params['email'])){
-            $this->CheckEmailRegistered($params['email']);
-        }
         // Esconde senhas
         if(isset($params['password'])){
             $params['password'] = $this->hidePassword($params['password']);
@@ -347,7 +344,7 @@ abstract class AbstractController
      *
      * @return  boolean|json 
      */
-    public function CheckEmailRegistered($email = '')
+    public function checkEmailRegistered($email = '')
     {
         $user = Users::where('email', $email)->first();
         if($user) {
