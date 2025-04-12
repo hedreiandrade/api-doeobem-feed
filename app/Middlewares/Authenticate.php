@@ -13,9 +13,11 @@ class Authenticate
     public function __invoke(Request $request, Response $response, callable $next)
     {
         if (!$request->hasHeader('Authorization')) {
+            $response->getBody()->write(json_encode([
+                'response' => 'Necessário token de acesso'
+            ]));
             return $response->withStatus(401)
-                ->withHeader('Content-Type', 'application/json')
-                ->withJson(['error' => 'Token de acesso necessário']);
+                           ->withHeader('Content-Type', 'application/json');
         }
         
         return $next($request, $response);
