@@ -7,9 +7,9 @@ vendor/
 composer.lock
 TODOS.txt
 /.docker
-app/Config/config.php
 app/Config/db.php
 app/Config/jwt.php
+app/Config/config.php
 .idea/api-doeobem.iml
 .idea/modules.xml
 public/images/
