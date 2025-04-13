@@ -21,6 +21,7 @@ After run the attached sql file(dblLoginAPI.sql) in api-doeobem inside mysql in 
 Run ```composer update``` at the root of the project, inside the container(api-doeobem-feed)
 
 Create files and configure \api-doeobem\app\Config
+- config.php
 - db.php
 - jwt.php
 
@@ -51,6 +52,7 @@ Run ```composer update``` at the root of the project in your directory
 Run the attached sql file(dblLoginAPI.sql) in api-doeobem.
 
 Create files and configure \api-doeobem\app\Config
+- config.php
 - db.php
 - jwt.php
 

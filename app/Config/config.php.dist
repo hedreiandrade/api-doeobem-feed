@@ -1,0 +1,5 @@
+<?php
+
+// Configurações para acesso as pastas e url
+const PUBLIC_PATH = '';
+const URL_PUBLIC = '';

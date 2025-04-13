@@ -6,8 +6,10 @@
  */
 require __DIR__ . '/../vendor/autoload.php';
 
+// Config para acessar pastas e urls
 // Config para acessar o Banco de Dados
-// JWT(secret) e as APIs de login do Google|Facebook
+// JWT(secret), Google, Facebook
+require __DIR__ . '/../app/Config/config.php';
 require __DIR__ . '/../app/Config/db.php';
 require __DIR__ . '/../app/Config/jwt.php';
 
