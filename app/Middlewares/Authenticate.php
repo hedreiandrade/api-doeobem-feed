@@ -18,8 +18,7 @@ class Authenticate
             $response->getBody()->write(json_encode([
                 'response' => 'Please give me a token authorization.'
             ]));
-            return $response->withStatus(401)
-                           ->withHeader('Content-Type', 'application/json');
+            return $response->withStatus(401)->withHeader('Content-Type', 'application/json');
         }
         try {
             $authHeader = $request->getHeader('Authorization')[0];
@@ -27,8 +26,7 @@ class Authenticate
                 $response->getBody()->write(json_encode([
                     'response' => 'Invalid Token'
                 ]));
-                return $response->withStatus(401)
-                               ->withHeader('Content-Type', 'application/json');
+                return $response->withStatus(401)->withHeader('Content-Type', 'application/json');
             }
             $token = $matches[1];
             try {
@@ -38,8 +36,7 @@ class Authenticate
                 $response->getBody()->write(json_encode([
                     'response' => 'Invalid Token',
                 ]));
-                return $response->withStatus(401)
-                            ->withHeader('Content-Type', 'application/json');
+                return $response->withStatus(401)->withHeader('Content-Type', 'application/json');
             }
 
         } catch (\Exception $e) {
