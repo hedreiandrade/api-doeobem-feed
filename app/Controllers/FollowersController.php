@@ -22,7 +22,7 @@ class FollowersController extends BaseController
     $userId = $request->getAttribute('user_id', false);
     $page = $request->getAttribute('page', false);
     $perPage = $request->getAttribute('perPage', false);
-    $return = Followers::select('users.id', 'users.photo', 'users.name', 'followers.follower_id')
+    $return = Followers::select('followers.follower_id', 'users.photo', 'users.name')
                        ->leftJoin('users', 'users.id', '=', 'followers.follower_id')
                        ->where('user_id', '=', $userId)
                        ->paginate($perPage, ['*'], 'page', $page);
