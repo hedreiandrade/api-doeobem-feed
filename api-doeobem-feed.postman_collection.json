@@ -40,14 +40,14 @@
 			"response": []
 		},
 		{
-			"name": "listing/api-doeobem/v1/users/1/5",
+			"name": "http://localhost:8015/public/v1/followers/85/1/5",
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzQ0NDkyMjkxLCJuYmYiOjE3NDQ0OTIyOTEsImV4cCI6MTc0NDUyMTA5MX0.1bO39pq6f6xHpksKnAmD-aGpmWYWz9BQykamelMk5nU",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzQ0NTQ2MDYwLCJuYmYiOjE3NDQ1NDYwNjAsImV4cCI6MTc0NDU3NDg2MH0.E-dnhqAoQM6BFIkPZLilIeT1-QWg5Aj_8iAjfp3pzdA",
 							"type": "string"
 						}
 					]
