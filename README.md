@@ -35,7 +35,7 @@ Configure in app/Config/db.php :
 	const CHARSET = 'utf8';
 	const COLLATION = 'utf8_general_ci';
 
-Test by Postman import the configuration(api-login.postman_collection.json) in attached
+Test by Postman import the configuration(api-doeobem-feed.postman_collection.json) in attached
 
 ---------------------------------------------------------------------------------------------
 
@@ -56,7 +56,7 @@ Create files and configure \api-doeobem\app\Config
 - db.php
 - jwt.php
 
-Test by Postman import the configuration(api-feed.postman_collection.json) in attached
+Test by Postman import the configuration(api-doeobem-feed.postman_collection.json) in attached
 
 ---------------------------------------------------------------------------------------------
 
