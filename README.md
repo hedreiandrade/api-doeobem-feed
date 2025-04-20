@@ -22,7 +22,6 @@ Run ```composer update``` at the root of the project, inside the container(api-d
 
 Create files and configure \api-doeobem\app\Config
 - config.php
-- db.php
 - jwt.php
 
 Configure in app/Config/db.php :
@@ -53,7 +52,6 @@ Run the attached sql file(dblLoginAPI.sql) in api-doeobem.
 
 Create files and configure \api-doeobem\app\Config
 - config.php
-- db.php
 - jwt.php
 
 Test by Postman import the configuration(api-doeobem-feed.postman_collection.json) in attached
