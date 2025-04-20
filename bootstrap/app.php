@@ -43,7 +43,7 @@ $container['db'] = function ($container) use ($capsule) {
     return $capsule;
 };
 
-$container['UsersController'] = function ($app) {
+$container['FollowersController'] = function ($app) {
     return new App\Controllers\FollowersController($app);
 };
 
