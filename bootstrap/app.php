@@ -44,7 +44,7 @@ $container['db'] = function ($container) use ($capsule) {
 };
 
 $container['UsersController'] = function ($app) {
-    return new App\Controllers\UsersController($app);
+    return new App\Controllers\FollowersController($app);
 };
 
 // Registra o middleware no container
