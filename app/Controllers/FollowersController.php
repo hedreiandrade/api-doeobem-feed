@@ -20,8 +20,8 @@ class FollowersController extends BaseController
     public function listing($request, $response)
     {
         $userId = $request->getAttribute('user_id', false);
-        $page = $request->getAttribute('page', false);
-        $perPage = $request->getAttribute('perPage', false);
+        $page = $request->getAttribute('page', 1);
+        $perPage = $request->getAttribute('perPage', 5);
         $return = Followers::select('followers.follower_id', 'users.photo', 'users.name')
                            ->leftJoin('users', 'users.id', '=', 'followers.follower_id')
                            ->where('user_id', '=', $userId)

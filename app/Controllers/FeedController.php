@@ -23,7 +23,7 @@ class FeedController extends BaseController
     {
         $userId = $request->getAttribute('user_id', false);
         $page = $request->getAttribute('page', 1);
-        $perPage = $request->getAttribute('perPage', 10);
+        $perPage = $request->getAttribute('perPage', 5);
         $followedUserIds = Followers::where('follower_id', $userId)
                                     ->whereNull('deleted_at')
                                     ->pluck('user_id');
