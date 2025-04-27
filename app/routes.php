@@ -19,4 +19,7 @@ $app->group('/v1', function () use ($app) {
     // List feed
     $app->get('/feed/{user_id}/{page}/{perPage}', 'App\Controllers\FeedController:listing');
 
+    // Posts
+    $app->post('/posts', 'App\Controllers\FeedController:posts');
+
 })->add($app->getContainer()->get('Authenticate'));

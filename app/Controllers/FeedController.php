@@ -7,7 +7,7 @@ namespace App\Controllers;
 
 use App\Models\Followers;
 use App\Models\Posts;
-use Illuminate\Support\Facades\DB;
+use App\Models\PostsUsers;
 
 class FeedController extends BaseController
 {
@@ -48,5 +48,38 @@ class FeedController extends BaseController
             $post->is_my_post = ($post->user_id == $userId) ? 1 : 0;
         }
         $this->respond($posts);
+    }
+
+    /**
+     * Insere um post
+     *
+     * @param   Request     $request    Objeto de requisição
+     * @param   Response    $response   Objeto de resposta
+     *
+     * @return  Json
+     */
+    public function posts($request, $response)
+    {
+        $params = $request->getParams();
+        if(!isset($params['user_id']) || !isset($params['description'])){
+            $this->respond(['response' => 'Please give me the user_id and description']);
+        }
+        if(isset($_FILES['media_link'])){
+            $directory = PUBLIC_PATH.'/images/profile';
+            if (!is_dir($directory)) {
+                mkdir($directory, 0777, true);
+            }
+            $file = $_FILES['media_link'];
+            $imageName = rand().$file['name'];
+            move_uploaded_file($file['tmp_name'], PUBLIC_PATH.'/images/profile/'.$imageName);
+            $params['media_link'] = URL_PUBLIC.'/images/profile/'.$imageName;
+        }else{
+            $params['media_link'] = '';
+        }
+        $posts = Posts::create($params);
+        $paramsPostsUsers['post_id'] = $posts->id;
+        $paramsPostsUsers['user_id'] = $params['user_id'];
+        $postsUsers = PostsUsers::create($paramsPostsUsers);
+        $this->respond(['post_user_id' => $postsUsers->id]);
     }
 }

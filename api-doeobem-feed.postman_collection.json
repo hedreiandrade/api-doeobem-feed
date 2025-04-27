@@ -47,7 +47,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzQ1MTQxMTgyLCJuYmYiOjE3NDUxNDExODIsImV4cCI6MTc0NTE2OTk4Mn0.IgiTavQ2noOgZhjkhPHj-iz5bQghdb2vEe_8s1ujmIk",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzQ1NzMzNTc4LCJuYmYiOjE3NDU3MzM1NzgsImV4cCI6MTc0NTc2MjM3OH0.ibpD2MTMXk1ts5C8IWH72I3dYAHS7EqVB5MbgdJD440",
 							"type": "string"
 						}
 					]
@@ -112,6 +112,46 @@
 						"85",
 						"1",
 						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8015/public/v1/posts",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzQ1NzkyMzU1LCJuYmYiOjE3NDU3OTIzNTUsImV4cCI6MTc0NTgyMTE1NX0.2ggSEBuH2n3h6-96puvz0LvdTeJJ2Fr38H27rrR50M4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user_id\" : 85,\n\t\"description\": \"Afeeee\",\n\t\"media_link\": \"\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8015/public/v1/posts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8015",
+					"path": [
+						"public",
+						"v1",
+						"posts"
 					]
 				}
 			},
