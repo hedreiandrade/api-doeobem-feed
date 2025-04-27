@@ -47,6 +47,10 @@ $container['FollowersController'] = function ($app) {
     return new App\Controllers\FollowersController($app);
 };
 
+$container['FeedController'] = function ($app) {
+    return new App\Controllers\FeedController($app);
+};
+
 // Registra o middleware no container
 $container['Authenticate'] = function ($container) {
     return new App\Middlewares\Authenticate();

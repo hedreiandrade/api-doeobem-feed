@@ -13,6 +13,10 @@ $app->group('/v1', function () use ($app) {
     // Home
     $app->get('/', function ($request, $response) { return 'HOME V1';});
 
-    // List 
+    // List followers
     $app->get('/followers/{user_id}/{page}/{perPage}', 'App\Controllers\FollowersController:listing');
+
+    // List feed
+    $app->get('/feed/{user_id}/{page}/{perPage}', 'App\Controllers\FeedController:listing');
+
 })->add($app->getContainer()->get('Authenticate'));
