@@ -65,14 +65,14 @@ class FeedController extends BaseController
             $this->respond(['response' => 'Please give me the user_id and description']);
         }
         if(isset($_FILES['media_link'])){
-            $directory = PUBLIC_PATH.'/images/profile';
+            $directory = PUBLIC_PATH.'/imagesVideos/media';
             if (!is_dir($directory)) {
                 mkdir($directory, 0777, true);
             }
             $file = $_FILES['media_link'];
-            $imageName = rand().$file['name'];
-            move_uploaded_file($file['tmp_name'], PUBLIC_PATH.'/images/profile/'.$imageName);
-            $params['media_link'] = URL_PUBLIC.'/images/profile/'.$imageName;
+            $mediaName = rand().$file['name'];
+            move_uploaded_file($file['tmp_name'], PUBLIC_PATH.'/imagesVideos/media/'.$mediaName);
+            $params['media_link'] = URL_PUBLIC.'/imagesVideos/media/'.$mediaName;
         }else{
             $params['media_link'] = '';
         }
