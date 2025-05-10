@@ -61,25 +61,55 @@ class FeedController extends BaseController
     public function posts($request, $response)
     {
         $params = $request->getParams();
-        if(!isset($params['user_id']) || !isset($params['description'])){
-            $this->respond(['response' => 'Please give me the user_id and description']);
+
+        // Verifica parâmetros obrigatórios
+        if (!isset($params['user_id']) || !isset($params['description'])) {
+            return $this->respond(['error' => 'Please provide user_id and description'], 400);
         }
-        if(isset($_FILES['media_link'])){
-            $directory = PUBLIC_PATH.'/imagesVideos/media';
-            if (!is_dir($directory)) {
-                mkdir($directory, 0777, true);
-            }
+
+        // Caminho do diretório
+        $directory = PUBLIC_PATH . '/imagesVideos/media';
+        if (!is_dir($directory)) {
+            mkdir($directory, 0777, true);
+        }
+
+        // Verifica e trata upload de mídia
+        if (isset($_FILES['media_link']) && $_FILES['media_link']['error'] === UPLOAD_ERR_OK) {
             $file = $_FILES['media_link'];
-            $mediaName = rand().$file['name'];
-            move_uploaded_file($file['tmp_name'], PUBLIC_PATH.'/imagesVideos/media/'.$mediaName);
-            $params['media_link'] = URL_PUBLIC.'/imagesVideos/media/'.$mediaName;
-        }else{
+            $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+
+            // Gera nome único com extensão original
+            $mediaName = uniqid('media_', true) . '.' . $extension;
+            $targetPath = $directory . '/' . $mediaName;
+
+            // Validação básica de tipo MIME
+            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'video/mp4', 'video/quicktime'];
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mimeType = finfo_file($finfo, $file['tmp_name']);
+            finfo_close($finfo);
+
+            if (!in_array($mimeType, $allowedTypes)) {
+                return $this->respond(['error' => 'Unsupported media type'], 415);
+            }
+
+            // Move o arquivo
+            if (!move_uploaded_file($file['tmp_name'], $targetPath)) {
+                return $this->respond(['error' => 'Failed to upload media file'], 500);
+            }
+
+            $params['media_link'] = URL_PUBLIC . '/imagesVideos/media/' . $mediaName;
+        } else {
             $params['media_link'] = '';
         }
+
+        // Cria o post
         $posts = Posts::create($params);
-        $paramsPostsUsers['post_id'] = $posts->id;
-        $paramsPostsUsers['user_id'] = $params['user_id'];
-        $postsUsers = PostsUsers::create($paramsPostsUsers);
-        $this->respond(['post_user_id' => $postsUsers->id]);
+        $postsUsers = PostsUsers::create([
+            'post_id' => $posts->id,
+            'user_id' => $params['user_id'],
+        ]);
+
+        return $this->respond(['post_user_id' => $postsUsers->id]);
     }
+
 }
