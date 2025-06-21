@@ -32,8 +32,8 @@ Configure in app/Config/db.php :
 	const DATA_BASE = 'api-doeobem';
 	const USER_NAME = 'root';
 	const PASSWORD = '123';
-	const CHARSET = 'utf8';
-	const COLLATION = 'utf8_general_ci';
+	const CHARSET = 'utf8mb4';
+	const COLLATION = 'utf8mb4_unicode_ci';
 
 Test by Postman import the configuration(api-doeobem-feed.postman_collection.json) in attached
 
