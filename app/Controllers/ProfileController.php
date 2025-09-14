@@ -5,7 +5,6 @@
  */
 namespace App\Controllers;
 
-use App\Models\Followers;
 use App\Models\Posts;
 
 class ProfileController extends BaseController
