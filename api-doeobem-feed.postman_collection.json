@@ -47,7 +47,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzQ1NzMzNTc4LCJuYmYiOjE3NDU3MzM1NzgsImV4cCI6MTc0NTc2MjM3OH0.ibpD2MTMXk1ts5C8IWH72I3dYAHS7EqVB5MbgdJD440",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzU3MzE2NDYyLCJuYmYiOjE3NTczMTY0NjIsImV4cCI6MTc1NzM0NTI2Mn0.yaliTPkPYUfe4VXXApj0kXKnIdPeYktMRhcyiMwVu6c",
 							"type": "string"
 						}
 					]
@@ -86,7 +86,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzQ1NzMzNTc4LCJuYmYiOjE3NDU3MzM1NzgsImV4cCI6MTc0NTc2MjM3OH0.ibpD2MTMXk1ts5C8IWH72I3dYAHS7EqVB5MbgdJD440",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzU3MzE2NDYyLCJuYmYiOjE3NTczMTY0NjIsImV4cCI6MTc1NzM0NTI2Mn0.yaliTPkPYUfe4VXXApj0kXKnIdPeYktMRhcyiMwVu6c",
 							"type": "string"
 						}
 					]
