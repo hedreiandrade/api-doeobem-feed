@@ -79,6 +79,45 @@
 			"response": []
 		},
 		{
+			"name": "http://localhost:8015/public/v1/following/85/1/5",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzU4MjkwODg1LCJuYmYiOjE3NTgyOTA4ODUsImV4cCI6MTc1ODMxOTY4NX0.R7duWXNiMK9GM4IQyp5ibcennVbFSJDf20F2Fe6S3EE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8015/public/v1/following/85/1/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8015",
+					"path": [
+						"public",
+						"v1",
+						"following",
+						"85",
+						"1",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "http://localhost:8015/public/v1/feed/85/1/5",
 			"request": {
 				"auth": {
@@ -125,7 +164,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzU3ODQ1NTY5LCJuYmYiOjE3NTc4NDU1NjksImV4cCI6MTc1Nzg3NDM2OX0.SKH3ni5Xd4RKNJkW4o8MHPMFYb9OM9y1AzwNP3tuVp0",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzU4MDUxMTQzLCJuYmYiOjE3NTgwNTExNDMsImV4cCI6MTc1ODA3OTk0M30.hJGGEPJDQl7w_qaffIob4rLIUG53t9Tcl4pR_tVZTLM",
 							"type": "string"
 						}
 					]
