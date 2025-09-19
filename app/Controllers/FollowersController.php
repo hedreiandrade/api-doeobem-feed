@@ -13,11 +13,10 @@ class FollowersController extends BaseController
     /* Lista de registros específicos (Com deleted_at null)
     *
     * @param   Request     $request    Objeto de requisição
-    * @param   Response    $response   Objeto de resposta
     *
     * @return  Json
     */
-    public function listing($request, $response)
+    public function listing($request)
     {
         $userId = $request->getAttribute('user_id', false);
         $page = $request->getAttribute('page', 1);
