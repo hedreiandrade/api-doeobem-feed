@@ -16,7 +16,7 @@ $app->group('/v1', function () use ($app) {
     // List followers
     $app->get('/followers/{user_id}/{page}/{perPage}', 'App\Controllers\FollowersController:listing');
 
-// List following
+    // List following
     $app->get('/following/{user_id}/{page}/{perPage}', 'App\Controllers\FollowingController:listing');
 
     // List feed
