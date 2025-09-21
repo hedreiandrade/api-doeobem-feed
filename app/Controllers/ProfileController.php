@@ -14,11 +14,10 @@ class ProfileController extends BaseController
     /* Lista de registros específicos (Com deleted_at null)
     *
     * @param   Request     $request    Objeto de requisição
-    * @param   Response    $response   Objeto de resposta
     *
     * @return  Json
     */
-    public function listing($request, $response)
+    public function listing($request)
     {
         $userId = $request->getAttribute('user_id', false);
         $page = $request->getAttribute('page', 1);
@@ -45,7 +44,6 @@ class ProfileController extends BaseController
      * Follow
      *
      * @param   Request     $request    Objeto de requisição
-     * @param   Response    $response   Objeto de resposta
      *
      * @return  Json
      */
@@ -67,7 +65,6 @@ class ProfileController extends BaseController
      * unFollow
      *
      * @param   Request     $request    Objeto de requisição
-     * @param   Response    $response   Objeto de resposta
      *
      * @return  Json
      */
@@ -88,7 +85,6 @@ class ProfileController extends BaseController
      * isFollowed
      *
      * @param   Request     $request    Objeto de requisição
-     * @param   Response    $response   Objeto de resposta
      *
      * @return  Json
      */
