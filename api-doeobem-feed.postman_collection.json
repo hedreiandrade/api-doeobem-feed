@@ -120,6 +120,46 @@
 			"response": []
 		},
 		{
+			"name": "http://localhost:8015/public/v1/isFollowed",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzU4NDkyMzUxLCJuYmYiOjE3NTg0OTIzNTEsImV4cCI6MTc1ODUyMTE1MX0.IH8b68Fi7Jt4l34LVzLEBn19YGTCoWrXSjkWmasUrrA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"user_id\": 106,\n\t\"follower_id\": 84\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8015/public/v1/isFollowed",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8015",
+					"path": [
+						"public",
+						"v1",
+						"isFollowed"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "http://localhost:8015/public/v1/followers/85/1/5",
 			"request": {
 				"auth": {
