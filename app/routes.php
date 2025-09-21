@@ -29,9 +29,12 @@ $app->group('/v1', function () use ($app) {
     $app->get('/profile/{user_id}/{page}/{perPage}', 'App\Controllers\ProfileController:listing');
 
     // Follow
-    $app->post('/follow', 'App\Controllers\FollowController:follow');
+    $app->post('/follow', 'App\Controllers\ProfileController:follow');
 
     // unFollow
-    $app->post('/unFollow', 'App\Controllers\FollowController:unFollow');
+    $app->post('/unFollow', 'App\Controllers\ProfileController:unFollow');
+
+    // Is follow ?
+    $app->post('/isFollowed', 'App\Controllers\ProfileController:isFollowed');
 
 })->add($app->getContainer()->get('Authenticate'));

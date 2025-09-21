@@ -6,6 +6,7 @@
 namespace App\Controllers;
 
 use App\Models\Posts;
+use App\Models\Followers;
 
 class ProfileController extends BaseController
 {
@@ -38,5 +39,69 @@ class ProfileController extends BaseController
                 ->orderBy('posts.created_at', 'desc')
                 ->paginate($perPage, ['*'], 'page', $page);
         $this->respond($return);
+    }
+
+    /**
+     * Follow
+     *
+     * @param   Request     $request    Objeto de requisição
+     * @param   Response    $response   Objeto de resposta
+     *
+     * @return  Json
+     */
+    public function follow($request)
+    {
+        $params = $request->getParams();
+        // Verifica parâmetros obrigatórios
+        if (!isset($params['user_id']) || !isset($params['follower_id'])) {
+            return $this->respond(['error' => 'Please provide user_id and follower_id'], 400);
+        }
+        $followers = Followers::create([
+            'user_id' => $params['user_id'],
+            'follower_id' => $params['follower_id'],
+        ]);
+        return $this->respond(['post_user_id' => $followers->id]);
+    }
+
+    /**
+     * unFollow
+     *
+     * @param   Request     $request    Objeto de requisição
+     * @param   Response    $response   Objeto de resposta
+     *
+     * @return  Json
+     */
+    public function unFollow($request)
+    {
+        $params = $request->getParams();
+        // Verifica parâmetros obrigatórios
+        if (!isset($params['user_id']) || !isset($params['follower_id'])) {
+            return $this->respond(['error' => 'Please provide user_id and follower_id'], 400);
+        }
+        Followers::where('user_id', $params['user_id'])
+                 ->where('follower_id', $params['follower_id'])
+                 ->delete();
+        return $this->respond(['user_id' => $params['user_id']]);
+    }
+
+    /**
+     * isFollowed
+     *
+     * @param   Request     $request    Objeto de requisição
+     * @param   Response    $response   Objeto de resposta
+     *
+     * @return  Json
+     */
+    public function isFollowed($request)
+    {
+        $params = $request->getParams();
+        // Verifica parâmetros obrigatórios
+        if (!isset($params['user_id']) || !isset($params['follower_id'])) {
+            return $this->respond(['error' => 'Please provide user_id and follower_id'], 400);
+        }
+        $return = Followers::where('user_id', $params['user_id'])
+                 ->where('follower_id', $params['follower_id'])
+                 ->exists();
+        return $this->respond(['is_followed' => $return]);
     }
 }
