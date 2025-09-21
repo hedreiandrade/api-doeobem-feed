@@ -40,6 +40,86 @@
 			"response": []
 		},
 		{
+			"name": "http://localhost:8015/public/v1/follow",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzU4NDMxMTc4LCJuYmYiOjE3NTg0MzExNzgsImV4cCI6MTc1ODQ1OTk3OH0.BgmLIM_Hg_mpkwznQK-CZxj-rctoPlIV9N0RnQnY8M4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"user_id\": 106,\n\t\"follower_id\": 84\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8015/public/v1/follow",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8015",
+					"path": [
+						"public",
+						"v1",
+						"follow"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8015/public/v1/unFollow",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzU4NDMxMTc4LCJuYmYiOjE3NTg0MzExNzgsImV4cCI6MTc1ODQ1OTk3OH0.BgmLIM_Hg_mpkwznQK-CZxj-rctoPlIV9N0RnQnY8M4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"user_id\": 106,\n\t\"follower_id\": 84\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8015/public/v1/unFollow",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8015",
+					"path": [
+						"public",
+						"v1",
+						"unFollow"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "http://localhost:8015/public/v1/followers/85/1/5",
 			"request": {
 				"auth": {
@@ -47,7 +127,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzU3MzE2NDYyLCJuYmYiOjE3NTczMTY0NjIsImV4cCI6MTc1NzM0NTI2Mn0.yaliTPkPYUfe4VXXApj0kXKnIdPeYktMRhcyiMwVu6c",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzU4MjkwODg1LCJuYmYiOjE3NTgyOTA4ODUsImV4cCI6MTc1ODMxOTY4NX0.R7duWXNiMK9GM4IQyp5ibcennVbFSJDf20F2Fe6S3EE",
 							"type": "string"
 						}
 					]

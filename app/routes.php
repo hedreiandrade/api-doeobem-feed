@@ -28,4 +28,10 @@ $app->group('/v1', function () use ($app) {
     // Profile posts
     $app->get('/profile/{user_id}/{page}/{perPage}', 'App\Controllers\ProfileController:listing');
 
+    // Follow
+    $app->post('/follow', 'App\Controllers\FollowController:follow');
+
+    // unFollow
+    $app->post('/unFollow', 'App\Controllers\FollowController:unFollow');
+
 })->add($app->getContainer()->get('Authenticate'));
