@@ -199,6 +199,45 @@
 			"response": []
 		},
 		{
+			"name": "http://localhost:8015/public/v1/search/Hedrei/1/5",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzU4NjcwNTgwLCJuYmYiOjE3NTg2NzA1ODAsImV4cCI6MTc1ODY5OTM4MH0.BXh17z1nHDGsXmuiM4KeeQDZL83DAJ0oWpryczKi0mM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8015/public/v1/search/Iasmin/1/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8015",
+					"path": [
+						"public",
+						"v1",
+						"search",
+						"Iasmin",
+						"1",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "http://localhost:8015/public/v1/following/85/1/5",
 			"request": {
 				"auth": {

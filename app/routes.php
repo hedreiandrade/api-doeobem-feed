@@ -28,6 +28,9 @@ $app->group('/v1', function () use ($app) {
     // Profile posts
     $app->get('/profile/{user_id}/{page}/{perPage}', 'App\Controllers\ProfileController:listing');
 
+    // Profile posts
+    $app->get('/search/{search}/{page}/{perPage}', 'App\Controllers\ProfileController:search');
+
     // Follow
     $app->post('/follow', 'App\Controllers\ProfileController:follow');
 

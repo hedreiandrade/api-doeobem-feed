@@ -7,6 +7,7 @@ namespace App\Controllers;
 
 use App\Models\Posts;
 use App\Models\Followers;
+use App\Models\Users;
 
 class ProfileController extends BaseController
 {
@@ -99,5 +100,27 @@ class ProfileController extends BaseController
                  ->where('follower_id', $params['follower_id'])
                  ->exists();
         return $this->respond(['is_followed' => $return]);
+    }
+
+    /**
+     * Search
+     *
+     * @param   Request     $request    Objeto de requisição
+     *
+     * @return  Json
+     */
+    public function search($request)
+    {
+        $search = $request->getAttribute('search', false);
+        $page = $request->getAttribute('page', 1);
+        $perPage = $request->getAttribute('perPage', 5);
+        // Verifica parâmetros obrigatórios
+        if (!isset($search) || !isset($page) || !isset($perPage)) {
+            return $this->respond(['error' => 'Please provide search, page and perPage'], 400);
+        }
+        $return = Users::where('name', 'LIKE', "%{$search}%")
+                        ->orWhere('email', 'LIKE', "%{$search}%")
+                        ->paginate($perPage, ['*'], 'page', $page);
+        return $this->respond($return);
     }
 }
