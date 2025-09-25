@@ -37,7 +37,7 @@ $app->group('/v1', function () use ($app) {
     // unFollow
     $app->post('/unFollow', 'App\Controllers\ProfileController:unFollow');
 
-    // Is follow ?
+    // Is followed ?
     $app->post('/isFollowed', 'App\Controllers\ProfileController:isFollowed');
 
     // Like post

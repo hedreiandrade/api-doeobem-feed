@@ -8,6 +8,7 @@ namespace App\Controllers;
 use App\Models\Posts;
 use App\Models\Followers;
 use App\Models\Users;
+use App\Models\Likes;
 
 class ProfileController extends BaseController
 {
@@ -23,7 +24,8 @@ class ProfileController extends BaseController
         $userId = $request->getAttribute('user_id', false);
         $page = $request->getAttribute('page', 1);
         $perPage = $request->getAttribute('perPage', 5);
-        $return = Posts::select(
+        $userSession = $request->getParam('user_session', false);
+        $posts = Posts::select([
                     'posts.id as post_id',
                     'posts.description',
                     'posts.media_link',
@@ -32,13 +34,40 @@ class ProfileController extends BaseController
                     'users.name',
                     'users.nickname',
                     'users.photo'
-                )
+                ])
+                ->selectRaw('COUNT(DISTINCT likes.id) as number_likes')
                 ->join('posts_users', 'posts.id', '=', 'posts_users.post_id')
                 ->join('users', 'posts_users.user_id', '=', 'users.id')
+                ->leftJoin('likes', function($join) {
+                    $join->on('likes.post_id', '=', 'posts.id')
+                        ->whereNull('likes.deleted_at');
+                })
                 ->where('posts_users.user_id', $userId)
+                ->groupBy([ 
+                    'posts.id',
+                    'posts.description', 
+                    'posts.media_link',
+                    'posts.created_at',
+                    'users.id',
+                    'users.name',
+                    'users.nickname',
+                    'users.photo'
+                ])
                 ->orderBy('posts.created_at', 'desc')
                 ->paginate($perPage, ['*'], 'page', $page);
-        $this->respond($return);
+        $postIds = $posts->pluck('post_id')->toArray();
+        // Busca os likes do usuário atual nesses posts (APENAS likes não deletados)
+        $userLikes = [];
+        if (!empty($postIds)) {
+            $userLikes = Likes::where('user_id', $userSession)
+                            ->whereIn('post_id', $postIds)
+                            ->pluck('post_id')
+                            ->toArray();
+        }
+        foreach ($posts as $post) {
+            $post->user_has_liked = in_array($post->post_id, $userLikes) ? 1 : 0;
+        }
+        return $this->respond($posts);
     }
 
     /**
