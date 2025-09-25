@@ -6,18 +6,19 @@
 namespace App\Controllers;
 
 use App\Models\Followers;
+use App\Models\Likes;
 use App\Models\Posts;
 use App\Models\PostsUsers;
 
 class FeedController extends BaseController
 {
-
-    /* Lista de registros específicos (Com deleted_at null)
-    *
-    * @param   Request     $request    Objeto de requisição
-    *
-    * @return  Json
-    */
+    /**
+     * Lista de registros específicos (Com deleted_at null)
+     *
+     * @param   Request     $request    Objeto de requisição
+     *
+     * @return  Json
+     */
     public function listing($request)
     {
         $userId = $request->getAttribute('user_id', false);
@@ -27,6 +28,7 @@ class FeedController extends BaseController
                                     ->whereNull('deleted_at')
                                     ->pluck('user_id');
         $allUserIds = $followedUserIds->push($userId);
+        // Primeiro obtém os posts
         $posts = Posts::select([
                         'posts.id as post_id',
                         'posts.description',
@@ -37,10 +39,13 @@ class FeedController extends BaseController
                         'users.nickname',
                         'users.photo'
                 ])
-                ->selectRaw('COUNT(likes.id) as number_likes')
+                ->selectRaw('COUNT(DISTINCT likes.id) as number_likes') // Adicione DISTINCT para evitar duplicação
                 ->join('posts_users', 'posts.id', '=', 'posts_users.post_id')
                 ->join('users', 'posts_users.user_id', '=', 'users.id')
-                ->leftJoin('likes', 'likes.post_id', '=', 'posts.id')
+                ->leftJoin('likes', function($join) {
+                    $join->on('likes.post_id', '=', 'posts.id')
+                        ->whereNull('likes.deleted_at'); // Importante: filtrar likes não deletados
+                })
                 ->whereIn('posts_users.user_id', $allUserIds)
                 ->whereNull('posts.deleted_at')
                 ->whereNull('users.deleted_at')
@@ -56,9 +61,21 @@ class FeedController extends BaseController
                 ])
                 ->orderBy('posts.created_at', 'desc')
                 ->paginate($perPage, ['*'], 'page', $page);
-                
+        // Obtém os IDs dos posts para verificar likes do usuário
+        $postIds = $posts->pluck('post_id')->toArray();
+        // Busca os likes do usuário atual nesses posts (APENAS likes não deletados)
+        $userLikes = [];
+        if (!empty($postIds)) {
+            $userLikes = Likes::where('user_id', $userId)
+                            ->whereIn('post_id', $postIds)
+                            ->whereNull('deleted_at') // CRÍTICO: só considerar likes ativos
+                            ->pluck('post_id')
+                            ->toArray();
+        }
         foreach ($posts as $post) {
             $post->is_my_post = ($post->user_id == $userId) ? 1 : 0;
+            // Verifica se o usuário atual curtiu este post
+            $post->user_has_liked = in_array($post->post_id, $userLikes) ? 1 : 0;
         }
         return $this->respond($posts);
     }
