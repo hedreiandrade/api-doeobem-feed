@@ -15,11 +15,10 @@ class FeedController extends BaseController
     /* Lista de registros específicos (Com deleted_at null)
     *
     * @param   Request     $request    Objeto de requisição
-    * @param   Response    $response   Objeto de resposta
     *
     * @return  Json
     */
-    public function listing($request, $response)
+    public function listing($request)
     {
         $userId = $request->getAttribute('user_id', false);
         $page = $request->getAttribute('page', 1);
@@ -27,27 +26,41 @@ class FeedController extends BaseController
         $followedUserIds = Followers::where('follower_id', $userId)
                                     ->whereNull('deleted_at')
                                     ->pluck('user_id');
-    
         $allUserIds = $followedUserIds->push($userId);
-        $posts = Posts::select(
-                    'posts.id as post_id',
-                    'posts.description',
+        $posts = Posts::select([
+                        'posts.id as post_id',
+                        'posts.description',
+                        'posts.media_link',
+                        'posts.created_at',
+                        'users.id as user_id',
+                        'users.name',
+                        'users.nickname',
+                        'users.photo'
+                ])
+                ->selectRaw('COUNT(likes.id) as number_likes')
+                ->join('posts_users', 'posts.id', '=', 'posts_users.post_id')
+                ->join('users', 'posts_users.user_id', '=', 'users.id')
+                ->leftJoin('likes', 'likes.post_id', '=', 'posts.id')
+                ->whereIn('posts_users.user_id', $allUserIds)
+                ->whereNull('posts.deleted_at')
+                ->whereNull('users.deleted_at')
+                ->groupBy([ 
+                    'posts.id',
+                    'posts.description', 
                     'posts.media_link',
                     'posts.created_at',
-                    'users.id as user_id',
+                    'users.id',
                     'users.name',
                     'users.nickname',
                     'users.photo'
-                )
-                ->join('posts_users', 'posts.id', '=', 'posts_users.post_id')
-                ->join('users', 'posts_users.user_id', '=', 'users.id')
-                ->whereIn('posts_users.user_id', $allUserIds)
+                ])
                 ->orderBy('posts.created_at', 'desc')
                 ->paginate($perPage, ['*'], 'page', $page);
+                
         foreach ($posts as $post) {
             $post->is_my_post = ($post->user_id == $userId) ? 1 : 0;
         }
-        $this->respond($posts);
+        return $this->respond($posts);
     }
 
     /**
