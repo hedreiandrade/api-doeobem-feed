@@ -127,7 +127,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzU4NzYxNjQ1LCJuYmYiOjE3NTg3NjE2NDUsImV4cCI6MTc1ODc5MDQ0NX0.uCgOhmEVFvSHOugsLEBh6O6bUfa5EHoOoohJBlG8B9o",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzU4Nzk5NTEyLCJuYmYiOjE3NTg3OTk1MTIsImV4cCI6MTc1ODgyODMxMn0.mEJuuWNnZoZF1DJqH9amcinF9QWJqY4cXa6DgGn_0FA",
 							"type": "string"
 						}
 					]
@@ -167,7 +167,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzU4NzYxNjQ1LCJuYmYiOjE3NTg3NjE2NDUsImV4cCI6MTc1ODc5MDQ0NX0.uCgOhmEVFvSHOugsLEBh6O6bUfa5EHoOoohJBlG8B9o",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzU4Nzk5NTEyLCJuYmYiOjE3NTg3OTk1MTIsImV4cCI6MTc1ODgyODMxMn0.mEJuuWNnZoZF1DJqH9amcinF9QWJqY4cXa6DgGn_0FA",
 							"type": "string"
 						}
 					]
@@ -403,7 +403,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzU4MDUxMTQzLCJuYmYiOjE3NTgwNTExNDMsImV4cCI6MTc1ODA3OTk0M30.hJGGEPJDQl7w_qaffIob4rLIUG53t9Tcl4pR_tVZTLM",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzU4Nzk5NTEyLCJuYmYiOjE3NTg3OTk1MTIsImV4cCI6MTc1ODgyODMxMn0.mEJuuWNnZoZF1DJqH9amcinF9QWJqY4cXa6DgGn_0FA",
 							"type": "string"
 						}
 					]
@@ -416,7 +416,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8015/public/v1/profile/85/1/5",
+					"raw": "http://localhost:8015/public/v1/profile/84/1/5?user_session=85",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -426,9 +426,15 @@
 						"public",
 						"v1",
 						"profile",
-						"85",
+						"84",
 						"1",
 						"5"
+					],
+					"query": [
+						{
+							"key": "user_session",
+							"value": "85"
+						}
 					]
 				}
 			},
