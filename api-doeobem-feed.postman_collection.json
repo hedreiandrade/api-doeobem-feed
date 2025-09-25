@@ -120,6 +120,86 @@
 			"response": []
 		},
 		{
+			"name": "http://localhost:8015/public/v1/like",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzU4NzYxNjQ1LCJuYmYiOjE3NTg3NjE2NDUsImV4cCI6MTc1ODc5MDQ0NX0.uCgOhmEVFvSHOugsLEBh6O6bUfa5EHoOoohJBlG8B9o",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"post_id\": 1,\n\t\"user_id\": 106\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8015/public/v1/like",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8015",
+					"path": [
+						"public",
+						"v1",
+						"like"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8015/public/v1/unLike",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzU4NzYxNjQ1LCJuYmYiOjE3NTg3NjE2NDUsImV4cCI6MTc1ODc5MDQ0NX0.uCgOhmEVFvSHOugsLEBh6O6bUfa5EHoOoohJBlG8B9o",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"post_id\": 1,\n\t\"user_id\": 106\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8015/public/v1/unLike",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8015",
+					"path": [
+						"public",
+						"v1",
+						"unLike"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "http://localhost:8015/public/v1/isFollowed",
 			"request": {
 				"auth": {

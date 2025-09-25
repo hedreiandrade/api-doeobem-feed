@@ -40,4 +40,10 @@ $app->group('/v1', function () use ($app) {
     // Is follow ?
     $app->post('/isFollowed', 'App\Controllers\ProfileController:isFollowed');
 
+    // Like post
+    $app->post('/like', 'App\Controllers\LikesController:like');
+
+    // unLike post
+    $app->post('/unLike', 'App\Controllers\LikesController:unLike');
+
 })->add($app->getContainer()->get('Authenticate'));
