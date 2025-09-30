@@ -46,4 +46,13 @@ $app->group('/v1', function () use ($app) {
     // unLike post
     $app->post('/unLike', 'App\Controllers\LikesController:unLike');
 
+    // Listr comments by post
+    $app->get('/comments/{post_id}/{page}/{perPage}', 'App\Controllers\CommentsController:listing');
+    
+    // Add Comment
+    $app->post('/comments', 'App\Controllers\CommentsController:comment');
+    
+    // Delete Comment
+    $app->delete('/comments/{comment_id}', 'App\Controllers\CommentsController:delete');
+
 })->add($app->getContainer()->get('Authenticate'));

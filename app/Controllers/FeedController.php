@@ -39,12 +39,17 @@ class FeedController extends BaseController
                         'users.nickname',
                         'users.photo'
                 ])
-                ->selectRaw('COUNT(DISTINCT likes.id) as number_likes') // Adicione DISTINCT para evitar duplicação
+                ->selectRaw('COUNT(DISTINCT likes.id) as number_likes')
+                ->selectRaw('COUNT(DISTINCT comments.id) as number_comments') 
                 ->join('posts_users', 'posts.id', '=', 'posts_users.post_id')
                 ->join('users', 'posts_users.user_id', '=', 'users.id')
                 ->leftJoin('likes', function($join) {
                     $join->on('likes.post_id', '=', 'posts.id')
-                        ->whereNull('likes.deleted_at'); // Importante: filtrar likes não deletados
+                        ->whereNull('likes.deleted_at'); 
+                })
+                ->leftJoin('comments', function($join) {
+                    $join->on('comments.post_id', '=', 'posts.id')
+                        ->whereNull('comments.deleted_at'); 
                 })
                 ->whereIn('posts_users.user_id', $allUserIds)
                 ->whereNull('posts.deleted_at')
