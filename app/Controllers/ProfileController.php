@@ -36,6 +36,7 @@ class ProfileController extends BaseController
                     'users.photo'
                 ])
                 ->selectRaw('COUNT(DISTINCT likes.id) as number_likes')
+                ->selectRaw('(SELECT COUNT(*) FROM comments WHERE comments.post_id = posts.id AND comments.deleted_at IS NULL) as number_comments')
                 ->join('posts_users', 'posts.id', '=', 'posts_users.post_id')
                 ->join('users', 'posts_users.user_id', '=', 'users.id')
                 ->leftJoin('likes', function($join) {
