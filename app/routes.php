@@ -25,6 +25,9 @@ $app->group('/v1', function () use ($app) {
     // Posts
     $app->post('/posts', 'App\Controllers\FeedController:posts');
 
+    // Delete Posts
+    $app->delete('/posts/{id}', 'App\Controllers\FeedController:deletePosts');
+
     // Profile posts
     $app->get('/profile/{user_id}/{page}/{perPage}', 'App\Controllers\ProfileController:listing');
 
