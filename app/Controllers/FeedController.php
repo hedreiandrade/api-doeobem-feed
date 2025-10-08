@@ -148,31 +148,31 @@ class FeedController extends BaseController
         return $this->respond(['post_user_id' => $postsUsers->id]);
     }
 
-/**
- * Deleta um post
- *
- * @param   Request     $request    Objeto de requisição
- * @param   Response    $response   Objeto de resposta
- * @param   array       $args       Argumentos da rota
- *
- * @return  Json
- */
-public function deletePosts($request, $response, $args)
-{
-    $id = $args['id'] ?? null;
-    if (!$id) {
-        return $this->respond(['error' => 'Please provide id'], 400);
-    }
-    try {
-        $post = Posts::find($id);
-        if (!$post) {
-            return $this->respond(['error' => 'Post not found'], 404);
+    /**
+     * Deleta um post
+     *
+     * @param   Request     $request    Objeto de requisição
+     * @param   Response    $response   Objeto de resposta
+     * @param   array       $args       Argumentos da rota
+     *
+     * @return  Json
+     */
+    public function deletePosts($request, $response, $args)
+    {
+        $id = $args['id'] ?? null;
+        if (!$id) {
+            return $this->respond(['error' => 'Please provide id'], 400);
         }
-        $post->delete();
-        return $this->respond(['id' => $id, 'message' => 'Post deleted successfully']);
-    } catch (Exception $e) {
-        return $this->respond(['error' => 'Failed to delete post'], 500);
+        try {
+            $post = Posts::find($id);
+            if (!$post) {
+                return $this->respond(['error' => 'Post not found'], 404);
+            }
+            $post->delete();
+            return $this->respond(['id' => $id, 'message' => 'Post deleted successfully']);
+        } catch (Exception $e) {
+            return $this->respond(['error' => 'Failed to delete post'], 500);
+        }
     }
-}
 
 }
