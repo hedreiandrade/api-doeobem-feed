@@ -38,6 +38,8 @@ class CommentsController extends BaseController
      */
     public function comment($request)
     {
+        // Definir o timezone para Brasil
+        date_default_timezone_set('America/Sao_Paulo');
         $params = $request->getParams();
         // Verifica parâmetros obrigatórios
         if (!isset($params['post_id']) || !isset($params['user_id']) || !isset($params['comment'])) {

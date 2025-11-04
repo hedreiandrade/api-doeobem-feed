@@ -96,6 +96,8 @@ class FeedController extends BaseController
      */
     public function posts($request, $response)
     {
+        // Definir o timezone para Brasil
+        date_default_timezone_set('America/Sao_Paulo');
         $params = $request->getParams();
 
         // Verifica parâmetros obrigatórios
