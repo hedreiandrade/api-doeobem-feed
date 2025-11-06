@@ -166,18 +166,18 @@ class FeedController extends BaseController
     public function deletePosts($request, $response, $args)
     {
         $id = $args['id'] ?? null;
-        if (!$id) {
-            return $this->respond(['error' => 'Please provide id'], 400);
-        }
         try {
+            if (!$id) {
+                return $this->respond(['status'=>401,'error' => 'Please provide id'], 400);
+            }
             $post = Posts::find($id);
             if (!$post) {
-                return $this->respond(['error' => 'Post not found'], 404);
+                return $this->respond(['status'=>401, 'error' => 'Post not found'], 404);
             }
             $post->delete();
-            return $this->respond(['id' => $id, 'message' => 'Post deleted successfully']);
+            return $this->respond(['status'=>200, 'message' => 'Post deleted successfully']);
         } catch (Exception $e) {
-            return $this->respond(['error' => 'Failed to delete post'], 500);
+            return $this->respond(['status'=>401,'error' => 'Failed to delete post'], 500);
         }
     }
 
