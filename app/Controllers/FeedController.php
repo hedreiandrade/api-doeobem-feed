@@ -96,58 +96,62 @@ class FeedController extends BaseController
      */
     public function posts($request, $response)
     {
-        // Definir o timezone para Brasil
-        date_default_timezone_set('America/Sao_Paulo');
-        $params = $request->getParams();
+        try{
+            // Definir o timezone para Brasil
+            date_default_timezone_set('America/Sao_Paulo');
+            $params = $request->getParams();
 
-        // Verifica parâmetros obrigatórios
-        if (!isset($params['user_id']) || !isset($params['description'])) {
-            return $this->respond(['error' => 'Please provide user_id and description'], 400);
-        }
-
-        // Caminho do diretório
-        $directory = PUBLIC_PATH . '/imagesVideos/media';
-        if (!is_dir($directory)) {
-            mkdir($directory, 0777, true);
-        }
-
-        // Verifica e trata upload de mídia
-        if (isset($_FILES['media_link']) && $_FILES['media_link']['error'] === UPLOAD_ERR_OK) {
-            $file = $_FILES['media_link'];
-            $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
-
-            // Gera nome único com extensão original
-            $mediaName = uniqid('media_', true) . '.' . $extension;
-            $targetPath = $directory . '/' . $mediaName;
-
-            // Validação básica de tipo MIME
-            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'video/mp4', 'video/quicktime'];
-            $finfo = finfo_open(FILEINFO_MIME_TYPE);
-            $mimeType = finfo_file($finfo, $file['tmp_name']);
-            finfo_close($finfo);
-
-            if (!in_array($mimeType, $allowedTypes)) {
-                return $this->respond(['error' => 'Unsupported media type'], 415);
+            // Verifica parâmetros obrigatórios
+            if (!isset($params['user_id']) || !isset($params['description'])) {
+                return $this->respond(['status'=>401, 'error' => 'Please provide user_id and description'], 400);
             }
 
-            // Move o arquivo
-            if (!move_uploaded_file($file['tmp_name'], $targetPath)) {
-                return $this->respond(['error' => 'Failed to upload media file'], 500);
+            // Caminho do diretório
+            $directory = PUBLIC_PATH . '/imagesVideos/media';
+            if (!is_dir($directory)) {
+                mkdir($directory, 0777, true);
             }
 
-            $params['media_link'] = URL_PUBLIC . '/imagesVideos/media/' . $mediaName;
-        } else {
-            $params['media_link'] = '';
+            // Verifica e trata upload de mídia
+            if (isset($_FILES['media_link']) && $_FILES['media_link']['error'] === UPLOAD_ERR_OK) {
+                $file = $_FILES['media_link'];
+                $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+
+                // Gera nome único com extensão original
+                $mediaName = uniqid('media_', true) . '.' . $extension;
+                $targetPath = $directory . '/' . $mediaName;
+
+                // Validação básica de tipo MIME
+                $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'video/mp4', 'video/quicktime'];
+                $finfo = finfo_open(FILEINFO_MIME_TYPE);
+                $mimeType = finfo_file($finfo, $file['tmp_name']);
+                finfo_close($finfo);
+
+                if (!in_array($mimeType, $allowedTypes)) {
+                    return $this->respond(['status'=>401, 'error' => 'Unsupported media type'], 415);
+                }
+
+                // Move o arquivo
+                if (!move_uploaded_file($file['tmp_name'], $targetPath)) {
+                    return $this->respond(['status'=>401, 'error' => 'Failed to upload media file'], 500);
+                }
+
+                $params['media_link'] = URL_PUBLIC . '/imagesVideos/media/' . $mediaName;
+            } else {
+                $params['media_link'] = '';
+            }
+
+            // Cria o post
+            $posts = Posts::create($params);
+            $postsUsers = PostsUsers::create([
+                'post_id' => $posts->id,
+                'user_id' => $params['user_id'],
+            ]);
+        }catch (\Exception $e) {
+            $return = array('status'=>401, 'error' => 'An error occurred while posting');
+             $this->respond($return);
         }
-
-        // Cria o post
-        $posts = Posts::create($params);
-        $postsUsers = PostsUsers::create([
-            'post_id' => $posts->id,
-            'user_id' => $params['user_id'],
-        ]);
-
-        return $this->respond(['post_user_id' => $postsUsers->id]);
+        return $this->respond(['status'=>200, 'post_user_id' => $postsUsers->id]);
     }
 
     /**
