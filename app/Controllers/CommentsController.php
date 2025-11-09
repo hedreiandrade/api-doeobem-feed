@@ -41,15 +41,21 @@ class CommentsController extends BaseController
         // Definir o timezone para Brasil
         date_default_timezone_set('America/Sao_Paulo');
         $params = $request->getParams();
-        // Verifica parâmetros obrigatórios
-        if (!isset($params['post_id']) || !isset($params['user_id']) || !isset($params['comment'])) {
-            return $this->respond(['error' => 'Please provide post_id, user_id and comment'], 400);
+        try{
+            // Verifica parâmetros obrigatórios
+            if (!isset($params['post_id']) || !isset($params['user_id']) || !isset($params['comment'])) {
+                return $this->respond(['status'=>401,'error' => 'Please provide post_id, user_id and comment'], 400);
+            }
+            $comments = Comments::create([
+                'post_id' => $params['post_id'],
+                'user_id' => $params['user_id'],
+                'comment' =>$params['comment']
+            ]);
+        }catch (\Exception $e) {
+            $return = array('status'=>401, 'error' => 'An error occurred while comment a post');
+             $this->respond($return);
         }
-        $comments = Comments::create([
-            'post_id' => $params['post_id'],
-            'user_id' => $params['user_id'],
-            'comment' =>$params['comment']
-        ]);
+
         return $this->respond(['id' => $comments->id]);
     }
 
@@ -63,12 +69,17 @@ class CommentsController extends BaseController
     public function delete($request)
     {
         $commentId = $request->getAttribute('comment_id', false);
-        // Verifica parâmetros obrigatórios
-        if (!isset($commentId)) {
-            return $this->respond(['error' => 'Please provide comment_id'], 400);
+        try{
+            // Verifica parâmetros obrigatórios
+            if (!isset($commentId)) {
+                return $this->respond(['status' => 401, 'error' => 'Please provide comment_id'], 400);
+            }
+            Comments::where('id', $commentId)
+                    ->delete();
+        }catch (\Exception $e) {
+            $return = array('status' => 401, 'error' => 'An error occurred while delete a comment');
+             $this->respond($return);
         }
-        Comments::where('id', $commentId)
-                 ->delete();
          return $this->respond(['comment_id' => $commentId]);
     }
 }
