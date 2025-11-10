@@ -81,14 +81,20 @@ class ProfileController extends BaseController
     public function follow($request)
     {
         $params = $request->getParams();
-        // Verifica parâmetros obrigatórios
-        if (!isset($params['user_id']) || !isset($params['follower_id'])) {
-            return $this->respond(['error' => 'Please provide user_id and follower_id'], 400);
+        try{
+            // Verifica parâmetros obrigatórios
+            if (!isset($params['user_id']) || !isset($params['follower_id'])) {
+                return $this->respond(['status' => 401, 'error' => 'Please provide user_id and follower_id'], 400);
+            }
+            $followers = Followers::create([
+                'user_id' => $params['user_id'],
+                'follower_id' => $params['follower_id'],
+            ]);
+        }catch (\Exception $e) {
+            $return = array('status' => 401,
+                        'response' => 'An error occurred while following a user');
+             $this->respond($return);
         }
-        $followers = Followers::create([
-            'user_id' => $params['user_id'],
-            'follower_id' => $params['follower_id'],
-        ]);
         return $this->respond(['post_user_id' => $followers->id]);
     }
 
@@ -102,13 +108,19 @@ class ProfileController extends BaseController
     public function unFollow($request)
     {
         $params = $request->getParams();
-        // Verifica parâmetros obrigatórios
-        if (!isset($params['user_id']) || !isset($params['follower_id'])) {
-            return $this->respond(['error' => 'Please provide user_id and follower_id'], 400);
+        try{
+            // Verifica parâmetros obrigatórios
+            if (!isset($params['user_id']) || !isset($params['follower_id'])) {
+                return $this->respond(['status' => 401, 'error' => 'Please provide user_id and follower_id'], 400);
+            }
+            Followers::where('user_id', $params['user_id'])
+                    ->where('follower_id', $params['follower_id'])
+                    ->delete();
+        }catch (\Exception $e) {
+            $return = array('status' => 401,
+                        'response' => 'An error occurred while unFollow a user');
+             $this->respond($return);
         }
-        Followers::where('user_id', $params['user_id'])
-                 ->where('follower_id', $params['follower_id'])
-                 ->delete();
         return $this->respond(['user_id' => $params['user_id']]);
     }
 
