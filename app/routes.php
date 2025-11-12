@@ -19,6 +19,12 @@ $app->group('/v1', function () use ($app) {
     // List following
     $app->get('/following/{user_id}/{page}/{perPage}', 'App\Controllers\FollowingController:listing');
 
+    // List followers
+    $app->get('/followersUsers/{id}/{page}/{perPage}', 'App\Controllers\FollowersUsersController:listing');
+
+    // List following
+    $app->get('/followingUsers/{id}/{page}/{perPage}', 'App\Controllers\FollowingUsersController:listing');
+
     // List feed
     $app->get('/feed/{user_id}/{page}/{perPage}', 'App\Controllers\FeedController:listing');
 
