@@ -279,6 +279,45 @@
 			"response": []
 		},
 		{
+			"name": "http://localhost:8015/public/v1/followersUsers/84/1/5",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzU4MjkwODg1LCJuYmYiOjE3NTgyOTA4ODUsImV4cCI6MTc1ODMxOTY4NX0.R7duWXNiMK9GM4IQyp5ibcennVbFSJDf20F2Fe6S3EE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8015/public/v1/followersUsers/85/1/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8015",
+					"path": [
+						"public",
+						"v1",
+						"followersUsers",
+						"85",
+						"1",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "http://localhost:8015/public/v1/search/Hedrei/1/5",
 			"request": {
 				"auth": {
@@ -357,6 +396,45 @@
 			"response": []
 		},
 		{
+			"name": "http://localhost:8015/public/v1/followingUsers/85/1/5",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzYyOTQ2OTM2LCJuYmYiOjE3NjI5NDY5MzYsImV4cCI6MTc2Mjk3NTczNn0.PwlIBrCCi_mtHjL2PKTqTfgagZl5FGPg_lZ63gMJ180",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8015/public/v1/followingUsers/84/1/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8015",
+					"path": [
+						"public",
+						"v1",
+						"followingUsers",
+						"84",
+						"1",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "http://localhost:8015/public/v1/feed/85/1/5",
 			"request": {
 				"auth": {
@@ -364,7 +442,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzU4Nzk5NTEyLCJuYmYiOjE3NTg3OTk1MTIsImV4cCI6MTc1ODgyODMxMn0.mEJuuWNnZoZF1DJqH9amcinF9QWJqY4cXa6DgGn_0FA",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzYxMTY1NjY3LCJuYmYiOjE3NjExNjU2NjcsImV4cCI6MTc2MTE5NDQ2N30.ZNgo5w_ugqFPqcfSvUYHsHNa7xFJ60__XrxK0wD8vNQ",
 							"type": "string"
 						}
 					]
@@ -475,7 +553,7 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:8015/public/v1/comments",
+			"name": "http://localhost:8015/public/v1/comments/4",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -506,6 +584,43 @@
 						"v1",
 						"comments",
 						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8015/public/v1/post/4",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzU5NjE0ODMxLCJuYmYiOjE3NTk2MTQ4MzEsImV4cCI6MTc1OTY0MzYzMX0.FqVjka8AMO_obwVU1mngDFKjZ5O1zcrZWPNHQq6evCM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8015/public/v1/posts/11",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8015",
+					"path": [
+						"public",
+						"v1",
+						"posts",
+						"11"
 					]
 				}
 			},
