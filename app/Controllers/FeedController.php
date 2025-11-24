@@ -232,7 +232,7 @@ class FeedController extends BaseController
     public function deletePosts($request, $response, $args)
     {
         $id = $args['id'] ?? null;
-                $bucketName = 'hmediaha';
+        $bucketName = 'hmediaha';
         try {
             if (!$id) {
                 return $this->respond(['status'=>401,'error' => 'Please provide id'], 400);
