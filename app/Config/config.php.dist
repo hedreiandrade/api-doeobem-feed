@@ -3,3 +3,8 @@
 // Configurações para acesso as pastas e url
 const PUBLIC_PATH = '';
 const URL_PUBLIC = '';
+const S3_KEY = '';
+const S3_KEY_SECRET = '';
+const S3_VERSION = '';
+const S3_REGION = '';
+const STORAGE = ''; // local ou S3
