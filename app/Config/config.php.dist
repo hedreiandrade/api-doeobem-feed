@@ -1,6 +1,6 @@
 <?php
 
-// Configurações para acesso as pastas e url
+// Configurações para acessos diversos
 const PUBLIC_PATH = '';
 const URL_PUBLIC = '';
 const S3_KEY = '';
