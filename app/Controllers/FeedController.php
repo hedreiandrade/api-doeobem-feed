@@ -214,7 +214,7 @@ class FeedController extends BaseController
                 'user_id' => $params['user_id'],
             ]);
         }catch (\Exception $e) {
-            $return = array('status'=>401, 'error' => 'An error occurred while posting'.$e->getMessage());
+            $return = array('status'=>401, 'error' => 'An error occurred while posting');
              $this->respond($return);
         }
         return $this->respond(['status'=>200, 'post_user_id' => $postsUsers->id]);
