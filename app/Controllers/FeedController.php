@@ -251,11 +251,12 @@ class FeedController extends BaseController
                 if (strpos($s3Path, $bucketName . '/') === 0) {
                     $s3Path = substr($s3Path, strlen($bucketName) + 1);
                 }
-                // Deleta o arquivo do S3
-                $this->s3Client->deleteObject([
-                    'Bucket' => $bucketName,
-                    'Key'    => $s3Path
-                ]);
+                if($s3Path){
+                    $this->s3Client->deleteObject([
+                        'Bucket' => $bucketName,
+                        'Key'    => $s3Path
+                    ]);
+                }
                 $post->delete();
             }
             return $this->respond(['status'=>200, 'message' => 'Post deleted successfully']);
