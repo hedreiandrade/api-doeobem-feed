@@ -265,4 +265,26 @@ class FeedController extends BaseController
         }
     }
 
+    public function rePosts($request) {
+        $params = $request->getParams();
+        $originalPost = Posts::where('id', $params['original_post_id'])->first();
+        if (!$originalPost) {
+            return $this->respond(['status' => 401, 'error' => 'Post original dont find'], 400);
+        }
+        try {
+            $createPost['description'] = $params['description'];
+            $createPost['media_link'] = $params['media_link'];
+            $createPost['is_repost'] = true;
+            $createPost['original_post_id'] = $params['original_post_id'];
+            $createPost['original_user_id'] = $params['original_user_id'];
+            $posts = Posts::create($createPost);
+            $postsUsers = PostsUsers::create([
+                'post_id' => $posts->id,
+                'user_id' => $params['user_id'],
+            ]);
+            $this->respond(['status'=>200, 'post_user_id' => $postsUsers->id]);
+        } catch (Exception $e) {
+            return $this->respond(['status' => 401, 'error' => 'Failed to repost'], 500);
+        }
+    }
 }

@@ -17,6 +17,9 @@ class Posts extends Model
     protected $fillable = [
         'description',
         'media_link',
+        'is_repost',
+        'original_post_id',
+        'original_user_id'
     ];
     protected $dates = [
         'created_at',

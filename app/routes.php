@@ -64,4 +64,7 @@ $app->group('/v1', function () use ($app) {
     // Delete Comment
     $app->delete('/comments/{comment_id}', 'App\Controllers\CommentsController:delete');
 
+    // Re Posts
+    $app->post('/rePosts', 'App\Controllers\FeedController:rePosts');
+
 })->add($app->getContainer()->get('Authenticate'));
