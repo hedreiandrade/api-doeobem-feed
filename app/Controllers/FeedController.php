@@ -64,23 +64,43 @@ class FeedController extends BaseController
         $userId = $request->getAttribute('user_id', false);
         $page = $request->getAttribute('page', 1);
         $perPage = $request->getAttribute('perPage', 5);
+        
         $followedUserIds = Followers::where('follower_id', $userId)
                                     ->whereNull('deleted_at')
                                     ->pluck('user_id');
         $allUserIds = $followedUserIds->push($userId);
+        
         // Primeiro obtém os posts
         $posts = Posts::select([
                         'posts.id as post_id',
                         'posts.description',
                         'posts.media_link',
                         'posts.created_at',
+                        'posts.is_repost',
+                        'posts.original_post_id',
+                        'posts.original_user_id',
                         'users.id as user_id',
                         'users.name',
                         'users.nickname',
                         'users.photo'
                 ])
                 ->selectRaw('COUNT(DISTINCT likes.id) as number_likes')
-                ->selectRaw('COUNT(DISTINCT comments.id) as number_comments') 
+                ->selectRaw('COUNT(DISTINCT comments.id) as number_comments')
+                ->selectRaw('(SELECT COUNT(*) FROM posts as reposts 
+                    WHERE reposts.original_post_id = posts.id 
+                    AND reposts.deleted_at IS NULL 
+                    AND reposts.is_repost = 1) as number_reposts')
+                // Adiciona LEFT JOIN para buscar o nome do usuário original quando for repost
+                ->selectRaw('CASE 
+                    WHEN posts.is_repost = 1 AND posts.original_user_id IS NOT NULL 
+                    THEN (SELECT name FROM users WHERE id = posts.original_user_id AND deleted_at IS NULL)
+                    ELSE NULL 
+                    END as original_user_name')
+                ->selectRaw('CASE 
+                    WHEN posts.is_repost = 1 AND posts.original_user_id IS NOT NULL 
+                    THEN (SELECT photo FROM users WHERE id = posts.original_user_id AND deleted_at IS NULL)
+                    ELSE NULL 
+                    END as original_user_photo')
                 ->join('posts_users', 'posts.id', '=', 'posts_users.post_id')
                 ->join('users', 'posts_users.user_id', '=', 'users.id')
                 ->leftJoin('likes', function($join) {
@@ -99,6 +119,9 @@ class FeedController extends BaseController
                     'posts.description', 
                     'posts.media_link',
                     'posts.created_at',
+                    'posts.is_repost',
+                    'posts.original_post_id',
+                    'posts.original_user_id',
                     'users.id',
                     'users.name',
                     'users.nickname',
@@ -106,8 +129,10 @@ class FeedController extends BaseController
                 ])
                 ->orderBy('posts.created_at', 'desc')
                 ->paginate($perPage, ['*'], 'page', $page);
+        
         // Obtém os IDs dos posts para verificar likes do usuário
         $postIds = $posts->pluck('post_id')->toArray();
+        
         // Busca os likes do usuário atual nesses posts (APENAS likes não deletados)
         $userLikes = [];
         if (!empty($postIds)) {
@@ -117,11 +142,13 @@ class FeedController extends BaseController
                             ->pluck('post_id')
                             ->toArray();
         }
+        
         foreach ($posts as $post) {
             $post->is_my_post = ($post->user_id == $userId) ? 1 : 0;
             // Verifica se o usuário atual curtiu este post
             $post->user_has_liked = in_array($post->post_id, $userLikes) ? 1 : 0;
         }
+        
         return $this->respond($posts);
     }
 
