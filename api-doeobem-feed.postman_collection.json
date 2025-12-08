@@ -435,14 +435,14 @@
 			"response": []
 		},
 		{
-			"name": "http://localhost:8015/public/v1/feed/85/1/5",
+			"name": "http://localhost:8015/public/v1/feed/233/1/5",
 			"request": {
 				"auth": {
 					"type": "bearer",
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzYxMTY1NjY3LCJuYmYiOjE3NjExNjU2NjcsImV4cCI6MTc2MTE5NDQ2N30.ZNgo5w_ugqFPqcfSvUYHsHNa7xFJ60__XrxK0wD8vNQ",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzY1MTE5MjkzLCJuYmYiOjE3NjUxMTkyOTMsImV4cCI6MTc2NTE0ODA5M30.GhTAjX7u_A57-upxNeMpDM0EE3EWB0ERCiUcRd15GHk",
 							"type": "string"
 						}
 					]
@@ -455,7 +455,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8015/public/v1/feed/85/1/5",
+					"raw": "http://localhost:8015/public/v1/feed/234/1/5",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -465,7 +465,7 @@
 						"public",
 						"v1",
 						"feed",
-						"85",
+						"234",
 						"1",
 						"5"
 					]
@@ -706,6 +706,46 @@
 						"public",
 						"v1",
 						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8015/public/v1/rePost",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZ2l0aHViLmNvbS9oZWRyZWlhbmRyYWRlIiwiYXVkIjoiaHR0cDovL3R3aXR0ZXIuY29tIiwiaWF0IjoxNzY0NDMyMzA3LCJuYmYiOjE3NjQ0MzIzMDcsImV4cCI6MTc2NDQ2MTEwN30.nWLJdmw2X86Wo3t5_1jPuR5T_kdICg9hhtblOMwQEaI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user_id\" : 85,\n\t\"description\": \"Afeeee\",\n\t\"media_link\": \"\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8015/public/v1/rePosts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8015",
+					"path": [
+						"public",
+						"v1",
+						"rePosts"
 					]
 				}
 			},
