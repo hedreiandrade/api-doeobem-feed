@@ -294,6 +294,8 @@ class FeedController extends BaseController
 
     public function rePosts($request) {
         $params = $request->getParams();
+        // Definir o timezone para Brasil
+        date_default_timezone_set('America/Sao_Paulo');
         $originalPost = Posts::where('id', $params['original_post_id'])->first();
         if (!$originalPost) {
             return $this->respond(['status' => 401, 'error' => 'Post original dont find'], 400);
