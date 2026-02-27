@@ -1,7 +1,6 @@
 version: "3.7"
 
 services:
-
   app:
     container_name: api-doeobem-feed
     build: 

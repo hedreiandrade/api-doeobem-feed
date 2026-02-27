@@ -40,15 +40,15 @@ class ProfileController extends BaseController
                 ])
                 ->selectRaw('COUNT(DISTINCT likes.id) as number_likes')
                 ->selectRaw('(SELECT COUNT(*) FROM comments WHERE comments.post_id = posts.id AND comments.deleted_at IS NULL) as number_comments')
-                ->selectRaw('(SELECT COUNT(*) FROM posts as reposts WHERE reposts.original_post_id = posts.id AND reposts.deleted_at IS NULL AND reposts.is_repost = 1) as number_reposts')
+                ->selectRaw('(SELECT COUNT(*) FROM posts as reposts WHERE reposts.original_post_id = posts.id AND reposts.deleted_at IS NULL AND reposts.is_repost = true) as number_reposts')
                 // Adiciona LEFT JOIN para buscar o nome do usuário original quando for repost
                 ->selectRaw('CASE 
-                    WHEN posts.is_repost = 1 AND posts.original_user_id IS NOT NULL 
+                    WHEN posts.is_repost = true AND posts.original_user_id IS NOT NULL 
                     THEN (SELECT name FROM users WHERE id = posts.original_user_id AND deleted_at IS NULL)
                     ELSE NULL 
                     END as original_user_name')
                 ->selectRaw('CASE 
-                    WHEN posts.is_repost = 1 AND posts.original_user_id IS NOT NULL 
+                    WHEN posts.is_repost = true AND posts.original_user_id IS NOT NULL 
                     THEN (SELECT photo FROM users WHERE id = posts.original_user_id AND deleted_at IS NULL)
                     ELSE NULL 
                     END as original_user_photo')
