@@ -28,6 +28,9 @@ $app->group('/v1', function () use ($app) {
     // List feed
     $app->get('/feed/{user_id}/{page}/{perPage}', 'App\Controllers\FeedController:listing');
 
+    // List feed
+    $app->get('/explore/{user_id}/{page}/{perPage}', 'App\Controllers\ExploreController:listing');
+
     // Posts
     $app->post('/posts', 'App\Controllers\FeedController:posts');
 

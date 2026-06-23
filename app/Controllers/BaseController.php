@@ -7,7 +7,7 @@ namespace App\Controllers;
 
 class BaseController
 {
-    public function respond($value = array())
+    public function respond($value = array(), $status = false)
     {
         header('Content-type: application/json');
         print json_encode($value);
