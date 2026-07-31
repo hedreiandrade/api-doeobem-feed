@@ -70,4 +70,7 @@ $app->group('/v1', function () use ($app) {
     // Re Posts
     $app->post('/rePosts', 'App\Controllers\FeedController:rePosts');
 
+    // Reels
+    $app->get('/reels/{user_id}/{page}/{perPage}', 'App\Controllers\ReelsController:listing');
+
 })->add($app->getContainer()->get('Authenticate'));
