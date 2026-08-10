@@ -40,6 +40,12 @@ $app->group('/v1', function () use ($app) {
     // Profile posts
     $app->get('/profile/{user_id}/{page}/{perPage}', 'App\Controllers\ProfileController:listing');
 
+    // Profile likes
+    $app->get('/profileLikes/{user_id}/{page}/{perPage}', 'App\Controllers\ProfileController:profileLikes');
+
+    // Profile Media
+    $app->get('/profileMedia/{user_id}/{page}/{perPage}', 'App\Controllers\ProfileController:profileMedia');
+
     // Search profile
     $app->get('/search/{search}/{page}/{perPage}', 'App\Controllers\ProfileController:search');
 

@@ -552,6 +552,84 @@
       "response": []
     },
     {
+      "name": "http://localhost:8015/public/v1/profileLikes/1/1/5",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8015/public/v1/profileLikes/1/1/5",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8015",
+          "path": [
+            "public",
+            "v1",
+            "profileLikes",
+            "1",
+            "1",
+            "5"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:8015/public/v1/profileMedia/1/1/5",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8015/public/v1/profileMedia/1/1/5",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8015",
+          "path": [
+            "public",
+            "v1",
+            "profileMedia",
+            "1",
+            "1",
+            "5"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
       "name": "http://localhost:8015/public/v1/comments/1/1/5",
       "request": {
         "auth": {

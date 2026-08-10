@@ -5,9 +5,11 @@
  */
 namespace App\Controllers;
 
-use App\Models\Followers;
 use App\Models\Likes;
 use App\Models\Posts;
+use Respect\Validation\Rules\Json;
+use Slim\Http\Request;
+
 
 class ReelsController extends BaseController
 {
@@ -19,7 +21,7 @@ class ReelsController extends BaseController
      *
      * @return  Json
      */
-    public function listing($request)
+    public function listing(Request $request)
     {
         $userId = $request->getAttribute('user_id', false);
         $page = $request->getAttribute('page', 1);
