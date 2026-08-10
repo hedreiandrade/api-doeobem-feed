@@ -28,8 +28,11 @@ $app->group('/v1', function () use ($app) {
     // List feed
     $app->get('/feed/{user_id}/{page}/{perPage}', 'App\Controllers\FeedController:listing');
 
-    // List feed
+    // List explore
     $app->get('/explore/{user_id}/{page}/{perPage}', 'App\Controllers\ExploreController:listing');
+
+    // List reels
+    $app->get('/reels/{user_id}/{page}/{perPage}', 'App\Controllers\ReelsController:listing');
 
     // Posts
     $app->post('/posts', 'App\Controllers\FeedController:posts');
@@ -75,8 +78,5 @@ $app->group('/v1', function () use ($app) {
 
     // Re Posts
     $app->post('/rePosts', 'App\Controllers\FeedController:rePosts');
-
-    // Reels
-    $app->get('/reels/{user_id}/{page}/{perPage}', 'App\Controllers\ReelsController:listing');
 
 })->add($app->getContainer()->get('Authenticate'));
