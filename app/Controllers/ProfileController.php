@@ -355,6 +355,7 @@ class ProfileController extends BaseController
             'users.nickname',
             'users.photo'
         ])
+        ->where('users.id', $userId)
         ->orderBy('posts.created_at', 'desc')
         ->paginate($perPage, ['*'], 'page', $page);
         
