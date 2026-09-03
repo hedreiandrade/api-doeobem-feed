@@ -6,6 +6,7 @@
 namespace App\Controllers;
 
 use App\Models\Followers;
+use Slim\Http\Request;
 
 class FollowingUsersController extends BaseController
 {
@@ -16,7 +17,7 @@ class FollowingUsersController extends BaseController
     *
     * @return  Json
     */
-    public function listing($request)
+    public function listing(Request $request)
     {
         $userId = $request->getAttribute('id', false);
         $page = $request->getAttribute('page', 1);

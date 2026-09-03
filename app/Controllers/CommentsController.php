@@ -6,6 +6,7 @@
 namespace App\Controllers;
 
 use App\Models\Comments;
+use Slim\Http\Request;
 
 class CommentsController extends BaseController
 {
@@ -17,7 +18,7 @@ class CommentsController extends BaseController
      *
      * @return  Json
      */
-    public function listing($request)
+    public function listing(Request $request)
     {
         $postId = $request->getAttribute('post_id', false);
         $page = $request->getAttribute('page', 1);
@@ -36,7 +37,7 @@ class CommentsController extends BaseController
      *
      * @return  Json
      */
-    public function comment($request)
+    public function comment(Request $request)
     {
         // Definir o timezone para Brasil
         date_default_timezone_set('America/Sao_Paulo');
@@ -53,7 +54,7 @@ class CommentsController extends BaseController
             ]);
         }catch (\Exception $e) {
             $return = array('status'=>401, 'error' => 'An error occurred while comment a post');
-             $this->respond($return);
+            $this->respond($return);
         }
 
         return $this->respond(['id' => $comments->id]);
@@ -66,7 +67,7 @@ class CommentsController extends BaseController
      *
      * @return  Json
      */
-    public function delete($request)
+    public function delete(Request $request)
     {
         $commentId = $request->getAttribute('comment_id', false);
         try{

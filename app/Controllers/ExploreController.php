@@ -1,13 +1,14 @@
 <?php
+
 /*
  * @author Hedrei Andrade <hedreiandrade@gmail.com>
  * @Version 1.0.0
  */
 namespace App\Controllers;
 
-use App\Models\Followers;
 use App\Models\Likes;
 use App\Models\Posts;
+use Slim\Http\Request;
 
 class ExploreController extends BaseController
 {
@@ -19,7 +20,7 @@ class ExploreController extends BaseController
      *
      * @return  Json
      */
-    public function listing($request)
+    public function listing(Request $request)
     {
         $userId = $request->getAttribute('user_id', false);
         $page = $request->getAttribute('page', 1);
