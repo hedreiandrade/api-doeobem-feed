@@ -34,6 +34,9 @@ $app->group('/v1', function () use ($app) {
     // List reels
     $app->get('/reels/{user_id}/{page}/{perPage}', 'App\Controllers\ReelsController:listing');
 
+    // List vertical reels
+    $app->get('/verticalReels/{user_id}/{page}/{perPage}', 'App\Controllers\ReelsController:verticalReels');
+
     // Posts
     $app->post('/posts', 'App\Controllers\FeedController:posts');
 

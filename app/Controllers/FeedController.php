@@ -213,12 +213,17 @@ class FeedController extends BaseController
                     $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'video/mp4', 'video/quicktime'];
                     $finfo = finfo_open(FILEINFO_MIME_TYPE);
                     $mimeType = finfo_file($finfo, $file['tmp_name']);
+                    $suffixVertical    = $this->isVerticalVideo($file['tmp_name']) ? '_vertical' : '';
                     finfo_close($finfo);
                     if (!in_array($mimeType, $allowedTypes)) {
                         return $this->respond(['status'=>401, 'error' => 'Unsupported media type'], 415);
                     }
                     // Criar caminho no S3 mantendo a mesma estrutura de diretórios
-                    $s3Path = 'imagesVideos/posts/' . $userFolder . '/' . $mediaName;
+                    if($suffixVertical){
+                        $s3Path = 'imagesVideos/posts/' . $userFolder . '/' . $suffixVertical . $mediaName;
+                    }else{
+                        $s3Path = 'imagesVideos/posts/' . $userFolder . '/' . $mediaName;
+                    }
                     // Fazer upload para o S3
                     $result = $this->s3Client->putObject([
                         'Bucket' => $bucketName,
@@ -245,6 +250,205 @@ class FeedController extends BaseController
              $this->respond($return);
         }
         return $this->respond(['status'=>200, 'post_user_id' => $postsUsers->id]);
+    }
+
+    /**
+     * Verifica se um vídeo é vertical (height > width).
+     * Tenta ffprobe primeiro; se indisponível, faz fallback lendo o MP4/MOV em PHP puro.
+     */
+    private function isVerticalVideo(string $filePath): bool
+    {
+        // Se não for vídeo, nem tenta
+        $mime = mime_content_type($filePath);
+        if (strpos($mime, 'video/') !== 0) {
+            return false;
+        }
+
+        // --- Tentativa 1: ffprobe ---
+        $shellDisabled = in_array(
+            'shell_exec',
+            array_map('trim', explode(',', (string) ini_get('disable_functions')))
+        );
+        if (function_exists('shell_exec') && !$shellDisabled) {
+            $cmd = sprintf(
+                'ffprobe -v quiet -print_format json -show_streams %s 2>&1',
+                escapeshellarg($filePath)
+            );
+            $output = shell_exec($cmd);
+
+            if (!empty($output)) {
+                $data = json_decode($output, true);
+                if (isset($data['streams']) && is_array($data['streams'])) {
+                    foreach ($data['streams'] as $stream) {
+                        if (($stream['codec_type'] ?? '') === 'video'
+                            && !empty($stream['width'])
+                            && !empty($stream['height'])) {
+                            return (int) $stream['height'] > (int) $stream['width'];
+                        }
+                    }
+                }
+            }
+        }
+
+        // --- Fallback: lê o box 'tkhd' do MP4/MOV em PHP puro ---
+        $dims = $this->getVideoDimensions($filePath);
+        if ($dims !== null) {
+            return $dims['height'] > $dims['width'];
+        }
+
+        return false;
+    }
+
+    /**
+     * Lê width/height de arquivos MP4/MOV lendo o box 'tkhd' diretamente.
+     * Retorna ['width'=>int, 'height'=>int] ou null.
+     */
+    private function getVideoDimensions(string $filePath): ?array
+    {
+        $fh = @fopen($filePath, 'rb');
+        if (!$fh) {
+            return null;
+        }
+
+        $size = filesize($filePath);
+        $dims = $this->findTkhd($fh, 0, $size);
+        fclose($fh);
+
+        return $dims;
+    }
+
+    /**
+     * Percorre a árvore de boxes do MP4/MOV procurando o box 'tkhd'.
+     */
+    private function findTkhd($fh, int $offset, int $end): ?array
+    {
+        while ($offset < $end - 8) {
+            if (fseek($fh, $offset) !== 0) {
+                return null;
+            }
+            $header = fread($fh, 8);
+            if (strlen($header) < 8) {
+                return null;
+            }
+
+            $size = unpack('N', substr($header, 0, 4))[1];
+            $type = substr($header, 4, 4);
+            $body = $offset + 8;
+
+            if ($size === 1) {
+                // 64-bit size
+                $ext = fread($fh, 8);
+                if (strlen($ext) < 8) {
+                    return null;
+                }
+                $size = unpack('J', $ext)[1];
+                $body = $offset + 16;
+            } elseif ($size === 0) {
+                $size = $end - $offset;
+            }
+
+            if ($size < 8) {
+                return null;
+            }
+
+            if ($type === 'tkhd') {
+                $dims = $this->parseTkhd($fh, $body, $size - ($body - $offset));
+                if ($dims !== null) {
+                    return $dims;
+                }
+            }
+
+            // Contêineres que podem ter tkhd dentro
+            if (in_array($type, ['moov', 'trak', 'mdia', 'minf', 'stbl'], true)) {
+                $r = $this->findTkhd($fh, $body, $offset + $size);
+                if ($r !== null) {
+                    return $r;
+                }
+            }
+
+            $offset += $size;
+        }
+
+        return null;
+    }
+
+    /**
+     * Extrai width/height do box 'tkhd' (fixed 16.16).
+     *
+     * Layout (após o header size+type do box):
+     *   v0: version(1) flags(3) creation(4) modification(4) trackID(4) reserved(4)
+     *       duration(4) reserved(8) layer(2) altGroup(2) volume(2) reserved(2)
+     *       matrix(36) width(4) height(4)          → total 84 bytes
+     *   v1: version(1) flags(3) creation(8) modification(8) trackID(4) reserved(4)
+     *       duration(8) reserved(8) layer(2) altGroup(2) volume(2) reserved(2)
+     *       matrix(36) width(4) height(4)          → total 96 bytes
+     *
+     * IMPORTANTE: os offsets antigos (80/84) estavam errados. O correto é 76/80 (v0)
+     * e 88/92 (v1).
+     */
+    private function parseTkhd($fh, int $offset, int $size): ?array
+    {
+        if (fseek($fh, $offset) !== 0) {
+            return null;
+        }
+        // Lê o suficiente para v0 (84) e v1 (96)
+        $data = fread($fh, min($size, 96));
+        if (strlen($data) < 84) {
+            return null;
+        }
+
+        $version = ord($data[0]);
+
+        if ($version === 0) {
+            $wOff      = 76;
+            $matrixOff = 40;
+        } else {
+            $wOff      = 88;
+            $matrixOff = 52;
+        }
+
+        if (strlen($data) < $wOff + 8) {
+            return null;
+        }
+
+        // width/height são fixed 16.16 (sempre positivos)
+        $w = unpack('N', substr($data, $wOff, 4))[1] / 65536;
+        $h = unpack('N', substr($data, $wOff + 4, 4))[1] / 65536;
+
+        if ($w <= 0 || $h <= 0) {
+            return null;
+        }
+
+        // Verifica rotação pela matrix (36 bytes, 9 valores 16.16)
+        //   [ a  b  u ]
+        //   [ c  d  v ]
+        //   [ x  y  w ]
+        // a = matrix[0], b = matrix[1]
+        // Se |a| < |b|, houve rotação de 90°/270° → troca w/h
+        $aBytes = substr($data, $matrixOff, 4);
+        $bBytes = substr($data, $matrixOff + 4, 4);
+        if (strlen($aBytes) === 4 && strlen($bBytes) === 4) {
+            $a = $this->fixed16_16($aBytes);
+            $b = $this->fixed16_16($bBytes);
+            if (abs($a) < abs($b)) {
+                [$w, $h] = [$h, $w];
+            }
+        }
+
+        return ['width' => (int) round($w), 'height' => (int) round($h)];
+    }
+
+    /**
+     * Converte um valor fixed 16.16 (big-endian, com sinal) para float.
+     */
+    private function fixed16_16(string $bytes): float
+    {
+        $v = unpack('N', $bytes)[1];
+        // Converte para signed (32 bits)
+        if ($v & 0x80000000) {
+            $v -= 0x100000000;
+        }
+        return $v / 65536.0;
     }
 
     /**
