@@ -17,7 +17,8 @@ class Comments extends Model
     protected $fillable = [
         'post_id',
         'user_id',
-        'comment'
+        'comment',
+        'media_link_comment'
     ];
     protected $dates = [
         'created_at',
