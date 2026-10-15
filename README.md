@@ -1,6 +1,6 @@
 This is a micro-service API to feed, followers, posts etc. With PHP, Docker, SLIM 3, Composer, JWT security, you can use Postman for test this API, but first, run the project https://github.com/hedreiandrade/api-doeobem
 
----------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------
 
 Run by Docker : 
 
