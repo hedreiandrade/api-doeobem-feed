@@ -38,7 +38,8 @@ class ExploreController extends BaseController
                         'users.id as user_id',
                         'users.name',
                         'users.nickname',
-                        'users.photo'
+                        'users.photo',
+                        'users.verified_profile'
                 ])
                 ->selectRaw('COUNT(DISTINCT likes.id) as number_likes')
                 ->selectRaw('COUNT(DISTINCT comments.id) as number_comments')
