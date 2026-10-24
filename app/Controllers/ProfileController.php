@@ -39,7 +39,8 @@ class ProfileController extends BaseController
                     'users.id as user_id',
                     'users.name',
                     'users.nickname',
-                    'users.photo'
+                    'users.photo',
+                    'users.verified_profile'
                 ])
                 ->selectRaw('COUNT(DISTINCT likes.id) as number_likes')
                 ->selectRaw('(SELECT COUNT(*) FROM comments WHERE comments.post_id = posts.id AND comments.deleted_at IS NULL) as number_comments')
@@ -209,9 +210,10 @@ class ProfileController extends BaseController
                 'users.id as user_id',
                 'users.name',
                 'users.nickname',
-                'users.photo'
+                'users.photo',
+                'users.verified_profile'
         ])
-        ->selectRaw('COUNT(DISTINCT likes.id) as number_likes')
+        ->selectRaw('COUNT(DISTINCT all_likes.id) as number_likes')
         ->selectRaw('COUNT(DISTINCT comments.id) as number_comments')
         ->selectRaw('(SELECT COUNT(*) FROM posts as reposts 
             WHERE reposts.original_post_id = posts.id 
@@ -229,16 +231,16 @@ class ProfileController extends BaseController
             END as original_user_photo')
         ->join('posts_users', 'posts.id', '=', 'posts_users.post_id')
         ->join('users', 'posts_users.user_id', '=', 'users.id')
-        // Inner join para filtrar apenas posts que o usuário curtiu
-        ->join('likes as user_likes', function($join) use ($userId) {
-            $join->on('user_likes.post_id', '=', 'posts.id')
-                ->where('user_likes.user_id', '=', $userId)
-                ->whereNull('user_likes.deleted_at');
-        })
-        // Left join para contar todas as curtidas (incluindo as de outros)
-        ->leftJoin('likes', function($join) {
+        // Inner join na tabela likes para filtrar apenas posts que o usuário curtiu
+        ->join('likes', function($join) use ($userId) {
             $join->on('likes.post_id', '=', 'posts.id')
-                ->whereNull('likes.deleted_at'); 
+                ->where('likes.user_id', '=', $userId)
+                ->whereNull('likes.deleted_at');
+        })
+        // Left join em likes (alias) para contar todas as curtidas (incluindo as de outros)
+        ->leftJoin('likes as all_likes', function($join) {
+            $join->on('all_likes.post_id', '=', 'posts.id')
+                ->whereNull('all_likes.deleted_at'); 
         })
         ->leftJoin('comments', function($join) {
             $join->on('comments.post_id', '=', 'posts.id')
@@ -258,9 +260,10 @@ class ProfileController extends BaseController
             'users.id',
             'users.name',
             'users.nickname',
-            'users.photo'
+            'users.photo',
+            'likes.created_at'
         ])
-        ->orderBy('posts.created_at', 'desc')
+        ->orderBy('likes.created_at', 'desc')
         ->paginate($perPage, ['*'], 'page', $page);
         
         // Obtém os IDs dos posts para verificar likes do usuário (redundante, mas mantido)
@@ -310,7 +313,8 @@ class ProfileController extends BaseController
                 'users.id as user_id',
                 'users.name',
                 'users.nickname',
-                'users.photo'
+                'users.photo',
+                'users.verified_profile'
         ])
         ->selectRaw('COUNT(DISTINCT likes.id) as number_likes')
         ->selectRaw('COUNT(DISTINCT comments.id) as number_comments')
