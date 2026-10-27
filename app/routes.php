@@ -82,4 +82,13 @@ $app->group('/v1', function () use ($app) {
     // Re Posts
     $app->post('/rePosts', 'App\Controllers\FeedController:rePosts');
 
+    // Blocked user 
+    $app->post('/blockUser', 'App\Controllers\BlockUsersController:blockUser');
+
+    // unBlocked user 
+    $app->post('/unBlockUser', 'App\Controllers\BlockUsersController:unBlockUser');
+
+    // List blocked users
+    $app->get('/blockUsers/{user_id}/{page}/{perPage}', 'App\Controllers\BlockUsersController:listing');
+
 })->add($app->getContainer()->get('Authenticate'));

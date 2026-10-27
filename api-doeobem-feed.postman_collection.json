@@ -958,6 +958,120 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "http://localhost:8015/public/v1/blockUser",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n\t\"user_id_bu\": 1,\r\n\t\"user_block_id_bu\": 3\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8015/public/v1/blockUser",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8015",
+          "path": [
+            "public",
+            "v1",
+            "blockUser"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:8015/public/v1/unBlockUser",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n\t\"user_id_bu\": 1,\r\n\t\"user_block_id_bu\": 3\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8015/public/v1/unBlockUser",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8015",
+          "path": [
+            "public",
+            "v1",
+            "unBlockUser"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:8015/public/v1/blockUsers/1/1/5",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8015/public/v1/blockUsers/1/1/5",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8015",
+          "path": [
+            "public",
+            "v1",
+            "blockUsers",
+            "1",
+            "1",
+            "5"
+          ]
+        }
+      },
+      "response": []
     }
   ],
   "event": [
