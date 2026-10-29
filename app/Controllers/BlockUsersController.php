@@ -53,7 +53,7 @@ class BlockUsersController extends BaseController
             ]);
         } catch (\Exception $e) {
             $return = array('status' => 401,
-                        'response' => 'An error occurred while like a post');
+                            'response' => 'An error occurred while like a post');
              $this->respond($return);
         }
         return $this->respond(['id' => $blockUsers->id]);
@@ -80,7 +80,7 @@ class BlockUsersController extends BaseController
             if (!$block) {
                 return $this->respond(['response' => 'User not found', 'status' => 404]);
             }
-            $block->delete(); 
+            $block->forceDelete(); 
             return $this->respond(['id' => $params['user_id_bu']]);
         } catch (\Exception $e) {
             return $this->respond([
