@@ -22,13 +22,18 @@ class BlockUsersController extends BaseController
      */
     public function listing(Request $request)
     {
-        $userId = $request->getAttribute('user_id', false);
-        $page = $request->getAttribute('page', 1);
+        $userId  = $request->getAttribute('user_id', false);
+        $page    = $request->getAttribute('page', 1);
         $perPage = $request->getAttribute('perPage', 5);
-        $return = BlockUsers::select('block_users.user_block_id_bu', 'block_users.user_id_bu', 'users.photo', 'users.name', 'users.verified_profile')
-                           ->leftJoin('users', 'users.id', '=', 'block_users.user_id_bu')
-                           ->where('block_users.user_id_bu', '=', $userId)
-                           ->paginate($perPage, ['*'], 'page', $page);
+        $return = BlockUsers::select(
+                                'block_users.user_block_id_bu',
+                                'block_users.user_id_bu',
+                                'users.photo',
+                                'users.name',
+                                'users.verified_profile')
+                            ->leftJoin('users', 'users.id', '=', 'block_users.user_block_id_bu')
+                            ->where('block_users.user_id_bu', '=', $userId)
+                            ->paginate($perPage, ['*'], 'page', $page);
         $this->respond($return);
     }
 
