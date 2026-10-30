@@ -91,4 +91,7 @@ $app->group('/v1', function () use ($app) {
     // List blocked users
     $app->get('/blockUsers/{user_id}/{page}/{perPage}', 'App\Controllers\BlockUsersController:listing');
 
+    // Is blocked user ?
+    $app->post('/isBlockUser', 'App\Controllers\BlockUsersController:isBlockUser');
+
 })->add($app->getContainer()->get('Authenticate'));

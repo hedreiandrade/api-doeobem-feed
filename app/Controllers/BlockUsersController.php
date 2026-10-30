@@ -89,4 +89,34 @@ class BlockUsersController extends BaseController
             ], 401);
         }
     }
+
+    /**
+     * isBlockUser user
+     *
+     * @param   Request     $request    Objeto de requisição
+     *
+     * @return  Json
+     */
+    public function isBlockUser($request)
+    {
+        $params = $request->getParams();
+        if (!isset($params['user_id_bu']) || !isset($params['user_block_id_bu'])) {
+            return $this->respond(['error' => 'Please provide user_id_bu and user_block_id_bu'], 400);
+        }
+        try {
+            $block = BlockUsers::where('user_id_bu', $params['user_id_bu'])
+                            ->where('user_block_id_bu', $params['user_block_id_bu'])
+                            ->whereNull('deleted_at')
+                            ->first();
+            if (!$block) {
+                return $this->respond(['is_blocked_user' => false]);
+            }
+            return $this->respond(['is_blocked_user' => true]);
+        } catch (\Exception $e) {
+            return $this->respond([
+                'status'   => 401,
+                'response' => 'An error occurred while unblocking user',
+            ], 401);
+        }
+    }
 }
