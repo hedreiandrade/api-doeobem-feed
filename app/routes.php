@@ -71,7 +71,7 @@ $app->group('/v1', function () use ($app) {
     $app->post('/unLike', 'App\Controllers\LikesController:unLike');
 
     // Listr comments by post
-    $app->get('/comments/{post_id}/{page}/{perPage}', 'App\Controllers\CommentsController:listing');
+    $app->get('/comments/{user_id}/{post_id}/{page}/{perPage}', 'App\Controllers\CommentsController:listing');
     
     // Add Comment
     $app->post('/comments', 'App\Controllers\CommentsController:comment');

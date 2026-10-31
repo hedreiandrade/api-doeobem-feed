@@ -62,6 +62,7 @@ class CommentsController extends BaseController
         $postId = $request->getAttribute('post_id', false);
         $page = $request->getAttribute('page', 1);
         $perPage = $request->getAttribute('perPage', 5);
+        $userId = $request->getAttribute('user_id', false);
         $return = Comments::select('comments.id', 'comments.post_id', 'comments.user_id', 'comments.created_at', 'comments.comment', 'comments.media_link_comment', 'users.photo', 'users.name', 'users.verified_profile')
                            ->leftJoin('users', 'users.id', '=', 'comments.user_id')
                             // Se existir bloqueio do usuário atual contra o autor do post, exclui
