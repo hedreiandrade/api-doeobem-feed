@@ -172,16 +172,30 @@ class ProfileController extends BaseController
      */
     public function search($request)
     {
-        $search = $request->getAttribute('search', false);
-        $page = $request->getAttribute('page', 1);
+        $search  = $request->getAttribute('search', false);
+        $page    = $request->getAttribute('page', 1);
         $perPage = $request->getAttribute('perPage', 5);
+        $userId  = $request->getAttribute('userId', false);
+
         // Verifica parâmetros obrigatórios
         if (!isset($search) || !isset($page) || !isset($perPage)) {
             return $this->respond(['error' => 'Please provide search, page and perPage'], 400);
         }
-        $return = Users::where('name', 'LIKE', "%{$search}%")
-                        ->orWhere('email', 'LIKE', "%{$search}%")
-                        ->paginate($perPage, ['*'], 'page', $page);
+
+        $return = Users::where(function ($q) use ($search) {
+                        $q->where('name', 'LIKE', "%{$search}%")
+                        ->orWhere('email', 'LIKE', "%{$search}%");
+                    })
+                    // Se existir bloqueio do usuário atual contra o usuário encontrado, exclui
+                    ->whereNotExists(function ($q) use ($userId) {
+                        $q->selectRaw('1')
+                        ->from('block_users')
+                        ->whereNull('block_users.deleted_at')
+                        ->where('block_users.user_id_bu', $userId)
+                        ->whereColumn('block_users.user_block_id_bu', 'users.id');
+                    })
+                    ->paginate($perPage, ['*'], 'page', $page);
+
         return $this->respond($return);
     }
 

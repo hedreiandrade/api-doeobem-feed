@@ -53,7 +53,7 @@ $app->group('/v1', function () use ($app) {
     $app->get('/profileMedia/{user_id}/{page}/{perPage}', 'App\Controllers\ProfileController:profileMedia');
 
     // Search profile
-    $app->get('/search/{search}/{page}/{perPage}', 'App\Controllers\ProfileController:search');
+    $app->get('/search/{userId}/{search}/{page}/{perPage}', 'App\Controllers\ProfileController:search');
 
     // Follow
     $app->post('/follow', 'App\Controllers\ProfileController:follow');
