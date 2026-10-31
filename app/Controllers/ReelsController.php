@@ -68,6 +68,14 @@ class ReelsController extends BaseController
             $join->on('comments.post_id', '=', 'posts.id')
                 ->whereNull('comments.deleted_at'); 
         })
+        // Se existir bloqueio do usuário atual contra o autor do post, exclui
+        ->whereNotExists(function ($q) use ($userId) {
+            $q->selectRaw('1')
+            ->from('block_users')
+            ->whereNull('block_users.deleted_at')
+            ->where('block_users.user_id_bu', $userId)
+            ->whereColumn('block_users.user_block_id_bu', 'posts_users.user_id');
+        })
         ->whereNull('posts.deleted_at')
         ->whereNull('users.deleted_at')
         // Filtro para apenas vídeos (sintaxe PostgreSQL)
@@ -163,6 +171,14 @@ class ReelsController extends BaseController
         ->leftJoin('comments', function($join) {
             $join->on('comments.post_id', '=', 'posts.id')
                 ->whereNull('comments.deleted_at'); 
+        })
+        // Se existir bloqueio do usuário atual contra o autor do post, exclui
+        ->whereNotExists(function ($q) use ($userId) {
+            $q->selectRaw('1')
+            ->from('block_users')
+            ->whereNull('block_users.deleted_at')
+            ->where('block_users.user_id_bu', $userId)
+            ->whereColumn('block_users.user_block_id_bu', 'posts_users.user_id');
         })
         ->whereNull('posts.deleted_at')
         ->whereNull('users.deleted_at')

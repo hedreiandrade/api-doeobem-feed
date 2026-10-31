@@ -64,6 +64,14 @@ class CommentsController extends BaseController
         $perPage = $request->getAttribute('perPage', 5);
         $return = Comments::select('comments.id', 'comments.post_id', 'comments.user_id', 'comments.created_at', 'comments.comment', 'comments.media_link_comment', 'users.photo', 'users.name', 'users.verified_profile')
                            ->leftJoin('users', 'users.id', '=', 'comments.user_id')
+                            // Se existir bloqueio do usuário atual contra o autor do post, exclui
+                            ->whereNotExists(function ($q) use ($userId) {
+                                $q->selectRaw('1')
+                                ->from('block_users')
+                                ->whereNull('block_users.deleted_at')
+                                ->where('block_users.user_id_bu', $userId)
+                                ->whereColumn('block_users.user_block_id_bu', 'users.id');
+                            })
                            ->where('post_id', '=', $postId)
                            ->paginate($perPage, ['*'], 'page', $page);
         $this->respond($return);
