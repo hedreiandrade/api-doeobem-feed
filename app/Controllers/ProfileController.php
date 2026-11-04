@@ -90,6 +90,30 @@ class ProfileController extends BaseController
         return $this->respond($posts);
     }
 
+    /* Lista informações do usuário
+    *
+    * @param   Request     $request    Objeto de requisição
+    *
+    * @return  Json
+    */
+    public function profileWithoutLogin(Request $request){
+        $userId = $request->getAttribute('user_id', false);
+        if (!$userId) {
+            return $this->respond(['status' => 401, 'error' => 'User not found'], 401);
+        }
+        $data = Users::select('name', 'city', 'country', 'bio', 'website', 'photo', 'cover_photo')
+                    ->where('id', $userId)
+                    ->first();
+
+        if (!$data) {
+            return $this->respond(['status' => 401, 'error' => 'User not found'], 404);
+        }
+        $data->followers_count = Followers::where('user_id', $userId)->count();
+        $data->following_count = Followers::where('follower_id', $userId)->count();
+
+        return $this->respond($data);
+    }
+
     /**
      * Follow
      *

@@ -8,6 +8,9 @@ $app->get('/', function ($request, $response) {
     return 'HOME';
 });
 
+// List Profile
+$app->get('/profile/{user_id}', 'App\Controllers\ProfileController:profileWithoutLogin');
+
 $app->group('/v1', function () use ($app) {
 
     // Home
