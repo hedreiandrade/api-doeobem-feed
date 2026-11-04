@@ -101,7 +101,7 @@ class ProfileController extends BaseController
         if (!$userId) {
             return $this->respond(['status' => 401, 'error' => 'User not found'], 401);
         }
-        $data = Users::select('name', 'city', 'country', 'bio', 'website', 'photo', 'cover_photo')
+        $data = Users::select('name', 'city', 'country', 'bio', 'website', 'photo', 'cover_photo', 'created_at')
                     ->where('id', $userId)
                     ->first();
 
