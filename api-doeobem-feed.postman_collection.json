@@ -1107,6 +1107,27 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "http://localhost:8015/public/profile/1",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8015/public/profile/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8015",
+          "path": [
+            "public",
+            "profile",
+            "1"
+          ]
+        }
+      },
+      "response": []
     }
   ],
   "event": [
