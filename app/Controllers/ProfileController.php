@@ -225,6 +225,83 @@ class ProfileController extends BaseController
     }
 
     /**
+     * Search mural
+     *
+     * @param   Request     $request    Objeto de requisição
+     *
+     * @return  Json
+     */
+    public function searchMural($request)
+    {
+        $page = $request->getAttribute('page', 1);
+        $perPage = $request->getAttribute('perPage', 5);
+        // Verifica parâmetros obrigatórios
+        if (!isset($page) || !isset($perPage)) {
+            return $this->respond(['status' => 401, 'error' => 'Please provide, page and perPage'], 401);
+        }
+        $return = Posts::select([
+                'posts.id as post_id',
+                'posts.description',
+                'posts.media_link',
+                'posts.created_at',
+                'posts.is_repost',
+                'posts.original_post_id',
+                'posts.original_user_id',
+                'users.id as user_id',
+                'users.name',
+                'users.nickname',
+                'users.photo',
+                'users.verified_profile'
+        ])
+        ->selectRaw('COUNT(DISTINCT likes.id) as number_likes')
+        ->selectRaw('COUNT(DISTINCT comments.id) as number_comments')
+        ->selectRaw('(SELECT COUNT(*) FROM posts as reposts 
+            WHERE reposts.original_post_id = posts.id 
+            AND reposts.deleted_at IS NULL 
+            AND reposts.is_repost = true) as number_reposts')
+        ->selectRaw('CASE 
+            WHEN posts.is_repost = true AND posts.original_user_id IS NOT NULL 
+            THEN (SELECT name FROM users WHERE id = posts.original_user_id AND deleted_at IS NULL)
+            ELSE NULL 
+            END as original_user_name')
+        ->selectRaw('CASE 
+            WHEN posts.is_repost = true AND posts.original_user_id IS NOT NULL 
+            THEN (SELECT photo FROM users WHERE id = posts.original_user_id AND deleted_at IS NULL)
+            ELSE NULL 
+            END as original_user_photo')
+        ->join('posts_users', 'posts.id', '=', 'posts_users.post_id')
+        ->join('users', 'posts_users.user_id', '=', 'users.id')
+        ->leftJoin('likes', function($join) {
+            $join->on('likes.post_id', '=', 'posts.id')
+                ->whereNull('likes.deleted_at'); 
+        })
+        ->leftJoin('comments', function($join) {
+            $join->on('comments.post_id', '=', 'posts.id')
+                ->whereNull('comments.deleted_at'); 
+        })
+        ->whereNull('posts.deleted_at')
+        ->whereNull('users.deleted_at')
+        // FILTRO ALTERADO: agora inclui VÍDEOS E IMAGENS
+        ->whereRaw("media_link ~* '\\.(mp4|webm|ogg|mov|avi|wmv|flv|mkv|m4v|jpeg|jpg|gif|png|webp|bmp|svg)$'")
+        ->groupBy([ 
+            'posts.id',
+            'posts.description', 
+            'posts.media_link',
+            'posts.created_at',
+            'posts.is_repost',
+            'posts.original_post_id',
+            'posts.original_user_id',
+            'users.id',
+            'users.name',
+            'users.nickname',
+            'users.photo'
+        ])
+        ->orderBy('posts.created_at', 'desc')
+        ->paginate($perPage, ['*'], 'page', $page);
+        return $this->respond($return);
+    }
+
+    /**
      * Profile likes
      *
      * @param   Request     $request    Objeto de requisição

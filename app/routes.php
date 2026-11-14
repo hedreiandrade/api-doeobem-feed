@@ -40,6 +40,9 @@ $app->group('/v1', function () use ($app) {
     // List vertical reels
     $app->get('/verticalReels/{user_id}/{page}/{perPage}', 'App\Controllers\ReelsController:verticalReels');
 
+    // List mural do search
+    $app->get('/searchMural/{page}/{perPage}', 'App\Controllers\ProfileController:searchMural');
+
     // Posts
     $app->post('/posts', 'App\Controllers\FeedController:posts');
 
